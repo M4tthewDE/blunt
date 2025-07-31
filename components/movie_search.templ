@@ -1,0 +1,15 @@
+package components
+
+import (
+	"github.com/m4tthewde/blunt/tmdb"
+)
+
+templ MovieSearch(results []tmdb.MovieSearchResult) {
+	<div id="movie-search-results">
+		<ul>
+			for _, result := range results {
+				<li>{ result.OriginalTitle }</li>
+			}
+		</ul>
+	</div>
+}
