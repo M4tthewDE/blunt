@@ -1,0 +1,11 @@
+package components
+
+import (
+	"github.com/m4tthewde/blunt/tmdb"
+)
+
+templ Movie(movieDetails tmdb.MovieDetailsResponse) {
+	<html>
+		<h1>{ movieDetails.OriginalTitle }</h1>	
+	</html>
+}

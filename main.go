@@ -14,6 +14,7 @@ import (
 func main() {
 	http.Handle("/", templ.Handler(components.Index()))
 	http.HandleFunc("/movie_search", movie_search)
+	http.HandleFunc("GET /movie/{id}", movie)
 
 	log.Println("Starting server on port 8080")
 	http.ListenAndServe(":8080", nil)
@@ -41,4 +42,16 @@ func movie_search(w http.ResponseWriter, r *http.Request) {
 	)
 
 	components.MovieSearch(resp.Results).Render(r.Context(), w)
+}
+
+func movie(w http.ResponseWriter, r *http.Request) {
+	idString := r.PathValue("id")
+
+	resp, err := tmdb.MovieDetails(r.Context(), idString)
+	if err != nil {
+		w.WriteHeader(500)
+		return
+	}
+
+	components.Movie(*resp).Render(r.Context(), w)
 }
