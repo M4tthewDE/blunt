@@ -10,7 +10,9 @@ import (
 )
 
 type MovieSearchResult struct {
-	OriginalTitle string `json:"original_title"`
+	OriginalTitle string  `json:"original_title"`
+	PosterPath    string  `json:"poster_path"`
+	Popularity    float64 `json:"popularity"`
 }
 
 type MovieSearchResponse struct {

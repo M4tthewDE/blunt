@@ -1,8 +1,10 @@
 package main
 
 import (
+	"cmp"
 	"log"
 	"net/http"
+	"slices"
 
 	"github.com/a-h/templ"
 	"github.com/m4tthewde/blunt/components"
@@ -31,6 +33,12 @@ func movie_search(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(500)
 		return
 	}
+
+	slices.SortFunc(resp.Results,
+		func(a, b tmdb.MovieSearchResult) int {
+			return cmp.Compare(b.Popularity, a.Popularity)
+		},
+	)
 
 	components.MovieSearch(resp.Results).Render(r.Context(), w)
 }
