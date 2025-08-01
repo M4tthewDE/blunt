@@ -13,6 +13,7 @@ type MovieSearchResult struct {
 	OriginalTitle string  `json:"original_title"`
 	PosterPath    string  `json:"poster_path"`
 	Popularity    float64 `json:"popularity"`
+	ReleaseDate   string  `json:"release_date"`
 }
 
 type MovieSearchResponse struct {

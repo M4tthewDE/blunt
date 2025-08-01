@@ -2,20 +2,30 @@ package components
 
 import (
 	"github.com/m4tthewde/blunt/tmdb"
+	"strings"
 )
 
 func buildPosterPath(posterPath string) string {
 	return "https://image.tmdb.org/t/p/w600_and_h900_bestv2" + posterPath
 }
 
+func getReleaseYear(releaseDate string) string {
+	if releaseDate == "" {
+		return "unknown"
+	}
+
+	return strings.Split(releaseDate, "-")[0]
+}
+
 templ MovieSearch(results []tmdb.MovieSearchResult) {
 	<div id="movie-search-results">
-		<ul style="list-style-type: none;">
+		<ul style="list-style-type: none; padding-left: 0px;">
 			for _, result := range results {
 				<li>
 					<div style="display: grid; align-items: start; justify-content: start;">
-						<img src={ buildPosterPath(result.PosterPath) } width="120" height="180">
-						<span style="grid-column-start: 2;">{ result.OriginalTitle }</span>		
+						<img src={ buildPosterPath(result.PosterPath) } width="120" height="180" style="padding-right: 10px;">
+						<span style="grid-column-start: 2; padding-right: 5px;">{ result.OriginalTitle }</span>
+						<span style="grid-column-start: 3; color: grey">({ getReleaseYear(result.ReleaseDate) })</span>
 					</div>
 				</li>
 				<hr>
