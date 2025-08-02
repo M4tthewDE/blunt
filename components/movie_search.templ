@@ -2,15 +2,18 @@ package components
 
 import (
 	"github.com/m4tthewde/blunt/tmdb"
-	"fmt"
 )
 
 
-func movieHref(id int64) string {
-	return fmt.Sprintf("/movie/%d", id)
+type SearchResult struct{
+	Href string
+	ImagePath string
+	Name string
+	Year string
+	Popularity float64
 }
 
-templ MovieSearch(results []tmdb.MovieSearchResult) {
+templ Search(results []SearchResult) {
 	<div id="movie-search-results" style="margin: auto; width: 50%;">
 		<style>
 			.movie-result:hover {
@@ -19,12 +22,14 @@ templ MovieSearch(results []tmdb.MovieSearchResult) {
 		</style>
 		<div style="margin: auto; width: 50%; display: grid; justify-content: center; gap: 1rem;">
 			for _, result := range results {
-				<a href={ movieHref(result.Id) } class="movie-result" style="display: grid; align-items: start; justify-content: start; text-decoration: none; color: inherit;">
-					<img src={ tmdb.BuildPosterPath(result.PosterPath) } width="120" height="180" style="padding-right: 10px;">
+				<a href={ result.Href } class="movie-result" style="display: grid; align-items: start; justify-content: start; text-decoration: none; color: inherit;">
+					<img src={ result.ImagePath} width="120" height="180" style="padding-right: 10px;">
 					<div style="grid-column-start: 2;">
 						<div style="display: grid; justify-content: start; align-items: start;">
-							<span>{ result.OriginalTitle }</span>
-							<span style="color: grey">{ tmdb.GetReleaseYear(result.ReleaseDate) }</span>
+							<span>{ result.Name }</span>
+							if result.Year != "" {
+								<span style="color: grey">{ tmdb.GetReleaseYear(result.Year) }</span>
+							}
 						</div>
 					</div>
 				</a>

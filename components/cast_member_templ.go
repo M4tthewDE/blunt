@@ -9,6 +9,7 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
+	"fmt"
 	"github.com/m4tthewde/blunt/tmdb"
 )
 
@@ -40,7 +41,7 @@ func CastMember(peopleResponse tmdb.PeopleResponse, credits []tmdb.PeopleCredit)
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(peopleResponse.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/cast_member.templ`, Line: 9, Col: 72}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/cast_member.templ`, Line: 10, Col: 72}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -53,7 +54,7 @@ func CastMember(peopleResponse tmdb.PeopleResponse, credits []tmdb.PeopleCredit)
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(tmdb.BuildPosterPath(peopleResponse.ProfilePath))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/cast_member.templ`, Line: 11, Col: 62}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/cast_member.templ`, Line: 12, Col: 62}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -71,7 +72,7 @@ func CastMember(peopleResponse tmdb.PeopleResponse, credits []tmdb.PeopleCredit)
 			var templ_7745c5c3_Var4 string
 			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(peopleResponse.Birthday)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/cast_member.templ`, Line: 16, Col: 67}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/cast_member.templ`, Line: 17, Col: 67}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
@@ -90,7 +91,7 @@ func CastMember(peopleResponse tmdb.PeopleResponse, credits []tmdb.PeopleCredit)
 			var templ_7745c5c3_Var5 string
 			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(peopleResponse.Deathday)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/cast_member.templ`, Line: 20, Col: 67}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/cast_member.templ`, Line: 21, Col: 67}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 			if templ_7745c5c3_Err != nil {
@@ -109,7 +110,7 @@ func CastMember(peopleResponse tmdb.PeopleResponse, credits []tmdb.PeopleCredit)
 			var templ_7745c5c3_Var6 string
 			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(peopleResponse.PlaceOfBirth)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/cast_member.templ`, Line: 24, Col: 71}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/cast_member.templ`, Line: 25, Col: 71}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 			if templ_7745c5c3_Err != nil {
@@ -128,7 +129,7 @@ func CastMember(peopleResponse tmdb.PeopleResponse, credits []tmdb.PeopleCredit)
 			var templ_7745c5c3_Var7 string
 			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(peopleResponse.KnownForDepartment)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/cast_member.templ`, Line: 28, Col: 77}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/cast_member.templ`, Line: 29, Col: 77}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 			if templ_7745c5c3_Err != nil {
@@ -147,7 +148,7 @@ func CastMember(peopleResponse tmdb.PeopleResponse, credits []tmdb.PeopleCredit)
 			var templ_7745c5c3_Var8 string
 			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(peopleResponse.Homepage)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/cast_member.templ`, Line: 32, Col: 67}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/cast_member.templ`, Line: 33, Col: 67}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 			if templ_7745c5c3_Err != nil {
@@ -165,7 +166,7 @@ func CastMember(peopleResponse tmdb.PeopleResponse, credits []tmdb.PeopleCredit)
 		var templ_7745c5c3_Var9 string
 		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(len(credits))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/cast_member.templ`, Line: 42, Col: 56}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/cast_member.templ`, Line: 43, Col: 56}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 		if templ_7745c5c3_Err != nil {
@@ -181,9 +182,9 @@ func CastMember(peopleResponse tmdb.PeopleResponse, credits []tmdb.PeopleCredit)
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var10 templ.SafeURL
-			templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinURLErrs(movieHref(credit.Id))
+			templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinURLErrs(fmt.Sprintf("/movie/%d", credit.Id))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/cast_member.templ`, Line: 45, Col: 34}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/cast_member.templ`, Line: 46, Col: 49}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 			if templ_7745c5c3_Err != nil {
@@ -196,7 +197,7 @@ func CastMember(peopleResponse tmdb.PeopleResponse, credits []tmdb.PeopleCredit)
 			var templ_7745c5c3_Var11 string
 			templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(tmdb.BuildPosterPath(credit.PosterPath))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/cast_member.templ`, Line: 46, Col: 55}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/cast_member.templ`, Line: 47, Col: 55}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
 			if templ_7745c5c3_Err != nil {
@@ -209,7 +210,7 @@ func CastMember(peopleResponse tmdb.PeopleResponse, credits []tmdb.PeopleCredit)
 			var templ_7745c5c3_Var12 string
 			templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(credit.OriginalTitle)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/cast_member.templ`, Line: 49, Col: 35}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/cast_member.templ`, Line: 50, Col: 35}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
 			if templ_7745c5c3_Err != nil {
@@ -222,7 +223,7 @@ func CastMember(peopleResponse tmdb.PeopleResponse, credits []tmdb.PeopleCredit)
 			var templ_7745c5c3_Var13 string
 			templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(tmdb.GetReleaseYear(credit.ReleaseDate))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/cast_member.templ`, Line: 50, Col: 74}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/cast_member.templ`, Line: 51, Col: 74}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
 			if templ_7745c5c3_Err != nil {

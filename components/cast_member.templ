@@ -2,6 +2,7 @@ package components
 
 import (
 	"github.com/m4tthewde/blunt/tmdb"
+	"fmt"
 )
 
 templ CastMember(peopleResponse tmdb.PeopleResponse, credits []tmdb.PeopleCredit) {
@@ -42,7 +43,7 @@ templ CastMember(peopleResponse tmdb.PeopleResponse, credits []tmdb.PeopleCredit
 		<h1 style="text-align: center;">Credits({ len(credits) })</h1>
 		<div style="margin: auto; width: 50%; display: grid; justify-content: center; gap: 1rem;">
 			for _, credit := range credits {
-				<a href={ movieHref(credit.Id) } class="credit" style="display: grid; justify-content: start; text-decoration: none; color: inherit;">
+				<a href={ fmt.Sprintf("/movie/%d", credit.Id) } class="credit" style="display: grid; justify-content: start; text-decoration: none; color: inherit;">
 					<img src={ tmdb.BuildPosterPath(credit.PosterPath) } width="120" height="180" style="padding-right: 10px;">
 					<div style="grid-column-start: 2;">
 						<div style="display: grid; justify-content: start; align-items: start;">

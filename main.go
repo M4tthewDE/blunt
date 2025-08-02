@@ -2,6 +2,7 @@ package main
 
 import (
 	"cmp"
+	"fmt"
 	"log"
 	"net/http"
 	"slices"
@@ -14,7 +15,7 @@ import (
 
 func main() {
 	http.Handle("/", templ.Handler(components.Index()))
-	http.HandleFunc("/movie_search", movie_search)
+	http.HandleFunc("/search", search)
 	http.HandleFunc("GET /movie/{id}", movie)
 	http.HandleFunc("GET /castMember/{id}", castMember)
 
@@ -22,28 +23,56 @@ func main() {
 	http.ListenAndServe(":8080", nil)
 }
 
-func movie_search(w http.ResponseWriter, r *http.Request) {
+func search(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
 		w.WriteHeader(500)
 		return
 	}
 
-	movieSearch := r.FormValue("movie_search")
+	search := r.FormValue("search")
 
-	resp, err := tmdb.SearchMovies(r.Context(), movieSearch)
+	movieResponse, err := tmdb.SearchMovies(r.Context(), search)
 	if err != nil {
 		w.WriteHeader(500)
 		return
 	}
 
-	slices.SortFunc(resp.Results,
-		func(a, b tmdb.MovieSearchResult) int {
+	peopleResponse, err := tmdb.SearchPeople(r.Context(), search)
+	if err != nil {
+		w.WriteHeader(500)
+		return
+	}
+
+	searchResults := make([]components.SearchResult, 0)
+
+	for _, movieResult := range movieResponse.Results {
+		searchResults = append(searchResults, components.SearchResult{
+			Href:       fmt.Sprintf("/movie/%d", movieResult.Id),
+			ImagePath:  tmdb.BuildPosterPath(movieResult.PosterPath),
+			Name:       movieResult.OriginalTitle,
+			Year:       tmdb.GetReleaseYear(movieResult.ReleaseDate),
+			Popularity: movieResult.Popularity,
+		})
+	}
+
+	for _, peopleResult := range peopleResponse.Results {
+		searchResults = append(searchResults, components.SearchResult{
+			Href:       fmt.Sprintf("/castMember/%d", peopleResult.Id),
+			ImagePath:  tmdb.BuildPosterPath(peopleResult.ProfilePath),
+			Name:       peopleResult.Name,
+			Year:       "",
+			Popularity: peopleResult.Popularity,
+		})
+	}
+
+	slices.SortFunc(searchResults,
+		func(a, b components.SearchResult) int {
 			return cmp.Compare(b.Popularity, a.Popularity)
 		},
 	)
 
-	components.MovieSearch(resp.Results).Render(r.Context(), w)
+	components.Search(searchResults).Render(r.Context(), w)
 }
 
 func movie(w http.ResponseWriter, r *http.Request) {

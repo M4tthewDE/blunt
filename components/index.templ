@@ -6,15 +6,15 @@ templ Index() {
 		<div style="margin: auto; width: 50%; justify-items: center; padding-bottom: 1rem;">
 			<h1 style="text-align: center;">Movie Explorer</h1>
 			<input type="search"
-				name="movie_search"
+				name="search"
 				autofocus
-				placeholder="Search Movies..."
-				hx-post="/movie_search"	
+				placeholder="Search Movies/People..."
+				hx-post="/search"	
 				hx-trigger="input changed delay:500ms"
-				hx-target="#movie-search-results"
+				hx-target="#search-results"
 				style="margin: auto; display: block;"
 			>
 		</div>
-		<div id="movie-search-results"></div>
+		<div id="search-results"></div>
 	</html>
 }
