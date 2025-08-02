@@ -4,9 +4,9 @@ import (
 	"github.com/m4tthewde/blunt/tmdb"
 )
 
-templ Movie(movieDetails tmdb.MovieDetailsResponse) {
+templ Movie(movieDetails tmdb.MovieDetailsResponse, cast []tmdb.MovieCastMember) {
 	<html>
-		<h1 style="padding-right: 5px; margin-top: 0px;">{ movieDetails.OriginalTitle }</h1>
+		<h1 style="margin-top: 0px;">{ movieDetails.OriginalTitle }</h1>
 		<div style="display: grid; align-items: start; justify-content: start">
 			<img src={ tmdb.BuildPosterPath(movieDetails.PosterPath) } width="180" height="270" style="grid-column-start: 1; padding-right: 10px;">
 			<div style="grid-column-start: 2;">
@@ -25,5 +25,23 @@ templ Movie(movieDetails tmdb.MovieDetailsResponse) {
 				<p>{ movieDetails.Overview }</p>
 			</div>
 		</div>
+		<h1>Cast</h1>
+		<style>
+			.cast-member:hover {
+				background-color: #e6f3ff;
+			}
+		</style>
+		<ul style="list-style-type: none; padding-left: 0px;">
+			for _, castMember := range cast {
+				<li class="cast-member" style="display:grid; align-items: center; justify-content: start;">
+					<img src={ tmdb.BuildPosterPath(castMember.ProfilePath) } width="120" height="180" style="padding-right: 10px;">
+					<div style="grid-column-start: 2;">
+						<span>{ castMember.Name }</span>
+						<span style="color: grey;">as</span>
+						<span>{ castMember.Character }</span>
+					</div>
+				</li>
+			}		
+		</ul>
 	</html>
 }

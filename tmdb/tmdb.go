@@ -36,6 +36,17 @@ type MovieDetailsResponse struct {
 	Revenue          int64   `json:"revenue"`
 }
 
+type MovieCreditsResponse struct {
+	Cast []MovieCastMember `json:"cast"`
+}
+
+type MovieCastMember struct {
+	Id          int64  `json:"id"`
+	Name        string `json:"name"`
+	Character   string `json:"character"`
+	ProfilePath string `json:"profile_path"`
+}
+
 func SearchMovies(ctx context.Context, search string) (*MovieSearchResponse, error) {
 	client := http.Client{}
 
@@ -106,6 +117,39 @@ func MovieDetails(ctx context.Context, movieId string) (*MovieDetailsResponse, e
 	}
 
 	var response MovieDetailsResponse
+	json.Unmarshal(body, &response)
+
+	return &response, nil
+}
+
+func Credits(ctx context.Context, movieId string) (*MovieCreditsResponse, error) {
+	client := http.Client{}
+
+	req, err := http.NewRequestWithContext(ctx, "GET", fmt.Sprintf("https://api.themoviedb.org/3/movie/%s/credits", movieId), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	token, ok := os.LookupEnv("TMDB_TOKEN")
+	if !ok {
+		return nil, errors.New("TMDB_TOKEN is not set")
+	}
+
+	req.Header.Add("Authorization", "Bearer "+token)
+
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var response MovieCreditsResponse
 	json.Unmarshal(body, &response)
 
 	return &response, nil

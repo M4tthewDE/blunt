@@ -47,11 +47,17 @@ func movie_search(w http.ResponseWriter, r *http.Request) {
 func movie(w http.ResponseWriter, r *http.Request) {
 	idString := r.PathValue("id")
 
-	resp, err := tmdb.MovieDetails(r.Context(), idString)
+	movieDetails, err := tmdb.MovieDetails(r.Context(), idString)
 	if err != nil {
 		w.WriteHeader(500)
 		return
 	}
 
-	components.Movie(*resp).Render(r.Context(), w)
+	credits, err := tmdb.Credits(r.Context(), idString)
+	if err != nil {
+		w.WriteHeader(500)
+		return
+	}
+
+	components.Movie(*movieDetails, credits.Cast).Render(r.Context(), w)
 }
