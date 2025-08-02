@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"slices"
+	"time"
 
 	"github.com/a-h/templ"
 	"github.com/m4tthewde/blunt/components"
@@ -77,6 +78,25 @@ func castMember(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(500)
 		return
 	}
+
+	slices.SortFunc(peopleCredits.Cast,
+		func(a, b tmdb.PeopleCredit) int {
+			timeA, err := time.Parse(time.DateOnly, a.ReleaseDate)
+			if err != nil {
+				return 0
+			}
+			timeB, err := time.Parse(time.DateOnly, b.ReleaseDate)
+			if err != nil {
+				return 0
+			}
+
+			if timeB.Before(timeA) {
+				return -1
+			}
+
+			return 1
+		},
+	)
 
 	components.CastMember(*people, peopleCredits.Cast).Render(r.Context(), w)
 }
