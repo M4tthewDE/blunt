@@ -6,6 +6,24 @@ import (
 
 templ Movie(movieDetails tmdb.MovieDetailsResponse) {
 	<html>
-		<h1>{ movieDetails.OriginalTitle }</h1>	
+		<h1 style="padding-right: 5px; margin-top: 0px;">{ movieDetails.OriginalTitle }</h1>
+		<div style="display: grid; align-items: start; justify-content: start">
+			<img src={ tmdb.BuildPosterPath(movieDetails.PosterPath) } width="180" height="270" style="grid-column-start: 1; padding-right: 10px;">
+			<div style="grid-column-start: 2;">
+				<div style="display: grid; align-items: start; justify-content: start;">
+					<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Date:</span>
+					<span style="grid-column-start: 2;">{ movieDetails.ReleaseDate }</span>
+					<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Tagline:</span>
+					<span style="grid-column-start: 2;">{ movieDetails.Tagline }</span>
+					<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Runtime:</span>
+					<span style="grid-column-start: 2;">{ movieDetails.Runtime }min</span>
+					<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Language:</span>
+					<span style="grid-column-start: 2;">{ movieDetails.OriginalLanguage }</span>
+					<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Revenue:</span>
+					<span style="grid-column-start: 2;">${ movieDetails.Revenue }</span>
+				</div>
+				<p>{ movieDetails.Overview }</p>
+			</div>
+		</div>
 	</html>
 }

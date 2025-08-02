@@ -8,6 +8,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"strings"
 )
 
 type MovieSearchResult struct {
@@ -23,11 +24,16 @@ type MovieSearchResponse struct {
 }
 
 type MovieDetailsResponse struct {
-	OriginalTitle string  `json:"original_title"`
-	PosterPath    string  `json:"poster_path"`
-	Popularity    float64 `json:"popularity"`
-	ReleaseDate   string  `json:"release_date"`
-	Id            int64   `json:"id"`
+	Id               int64   `json:"id"`
+	OriginalTitle    string  `json:"original_title"`
+	PosterPath       string  `json:"poster_path"`
+	Popularity       float64 `json:"popularity"`
+	ReleaseDate      string  `json:"release_date"`
+	Tagline          string  `json:"tagline"`
+	Runtime          int64   `json:"runtime"`
+	OriginalLanguage string  `json:"original_language"`
+	Overview         string  `json:"overview"`
+	Revenue          int64   `json:"revenue"`
 }
 
 func SearchMovies(ctx context.Context, search string) (*MovieSearchResponse, error) {
@@ -103,4 +109,16 @@ func MovieDetails(ctx context.Context, movieId string) (*MovieDetailsResponse, e
 	json.Unmarshal(body, &response)
 
 	return &response, nil
+}
+
+func BuildPosterPath(posterPath string) string {
+	return "https://image.tmdb.org/t/p/w600_and_h900_bestv2" + posterPath
+}
+
+func GetReleaseYear(releaseDate string) string {
+	if releaseDate == "" {
+		return "unknown"
+	}
+
+	return strings.Split(releaseDate, "-")[0]
 }

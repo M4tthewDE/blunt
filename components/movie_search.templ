@@ -2,21 +2,9 @@ package components
 
 import (
 	"github.com/m4tthewde/blunt/tmdb"
-	"strings"
 	"fmt"
 )
 
-func buildPosterPath(posterPath string) string {
-	return "https://image.tmdb.org/t/p/w600_and_h900_bestv2" + posterPath
-}
-
-func getReleaseYear(releaseDate string) string {
-	if releaseDate == "" {
-		return "unknown"
-	}
-
-	return strings.Split(releaseDate, "-")[0]
-}
 
 func movieHref(id int64) string {
 	return fmt.Sprintf("/movie/%d", id)
@@ -33,9 +21,9 @@ templ MovieSearch(results []tmdb.MovieSearchResult) {
 			for _, result := range results {
 				<li>
 					<a href={ movieHref(result.Id) } class="movie-result" style="display: grid; align-items: start; justify-content: start;">
-						<img src={ buildPosterPath(result.PosterPath) } width="120" height="180" style="padding-right: 10px;">
+						<img src={ tmdb.BuildPosterPath(result.PosterPath) } width="120" height="180" style="padding-right: 10px;">
 						<span style="grid-column-start: 2; padding-right: 5px;">{ result.OriginalTitle }</span>
-						<span style="grid-column-start: 3; color: grey">({ getReleaseYear(result.ReleaseDate) })</span>
+						<span style="grid-column-start: 3; color: grey">({ tmdb.GetReleaseYear(result.ReleaseDate) })</span>
 					</a>
 				</li>
 				<hr>
