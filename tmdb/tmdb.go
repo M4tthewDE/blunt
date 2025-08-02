@@ -3,11 +3,9 @@ package tmdb
 import (
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io"
 	"net/http"
-	"os"
 	"strings"
 )
 
@@ -81,17 +79,12 @@ type PeopleCredit struct {
 	ReleaseDate   string `json:"release_date"`
 }
 
-func SearchMovies(ctx context.Context, search string) (*MovieSearchResponse, error) {
+func SearchMovies(ctx context.Context, token string, search string) (*MovieSearchResponse, error) {
 	client := http.Client{}
 
 	req, err := http.NewRequestWithContext(ctx, "GET", "https://api.themoviedb.org/3/search/movie", nil)
 	if err != nil {
 		return nil, err
-	}
-
-	token, ok := os.LookupEnv("TMDB_TOKEN")
-	if !ok {
-		return nil, errors.New("TMDB_TOKEN is not set")
 	}
 
 	req.Header.Add("Authorization", "Bearer "+token)
@@ -122,17 +115,12 @@ func SearchMovies(ctx context.Context, search string) (*MovieSearchResponse, err
 	return &response, nil
 }
 
-func SearchPeople(ctx context.Context, search string) (*PeopleSearchResponse, error) {
+func SearchPeople(ctx context.Context, token string, search string) (*PeopleSearchResponse, error) {
 	client := http.Client{}
 
 	req, err := http.NewRequestWithContext(ctx, "GET", "https://api.themoviedb.org/3/search/person", nil)
 	if err != nil {
 		return nil, err
-	}
-
-	token, ok := os.LookupEnv("TMDB_TOKEN")
-	if !ok {
-		return nil, errors.New("TMDB_TOKEN is not set")
 	}
 
 	req.Header.Add("Authorization", "Bearer "+token)
@@ -163,17 +151,12 @@ func SearchPeople(ctx context.Context, search string) (*PeopleSearchResponse, er
 	return &response, nil
 }
 
-func MovieDetails(ctx context.Context, movieId string) (*MovieDetailsResponse, error) {
+func MovieDetails(ctx context.Context, token string, movieId string) (*MovieDetailsResponse, error) {
 	client := http.Client{}
 
 	req, err := http.NewRequestWithContext(ctx, "GET", fmt.Sprintf("https://api.themoviedb.org/3/movie/%s", movieId), nil)
 	if err != nil {
 		return nil, err
-	}
-
-	token, ok := os.LookupEnv("TMDB_TOKEN")
-	if !ok {
-		return nil, errors.New("TMDB_TOKEN is not set")
 	}
 
 	req.Header.Add("Authorization", "Bearer "+token)
@@ -196,17 +179,12 @@ func MovieDetails(ctx context.Context, movieId string) (*MovieDetailsResponse, e
 	return &response, nil
 }
 
-func Credits(ctx context.Context, movieId string) (*MovieCreditsResponse, error) {
+func Credits(ctx context.Context, token string, movieId string) (*MovieCreditsResponse, error) {
 	client := http.Client{}
 
 	req, err := http.NewRequestWithContext(ctx, "GET", fmt.Sprintf("https://api.themoviedb.org/3/movie/%s/credits", movieId), nil)
 	if err != nil {
 		return nil, err
-	}
-
-	token, ok := os.LookupEnv("TMDB_TOKEN")
-	if !ok {
-		return nil, errors.New("TMDB_TOKEN is not set")
 	}
 
 	req.Header.Add("Authorization", "Bearer "+token)
@@ -229,17 +207,12 @@ func Credits(ctx context.Context, movieId string) (*MovieCreditsResponse, error)
 	return &response, nil
 }
 
-func People(ctx context.Context, personId string) (*PeopleResponse, error) {
+func People(ctx context.Context, token string, personId string) (*PeopleResponse, error) {
 	client := http.Client{}
 
 	req, err := http.NewRequestWithContext(ctx, "GET", fmt.Sprintf("https://api.themoviedb.org/3/person/%s", personId), nil)
 	if err != nil {
 		return nil, err
-	}
-
-	token, ok := os.LookupEnv("TMDB_TOKEN")
-	if !ok {
-		return nil, errors.New("TMDB_TOKEN is not set")
 	}
 
 	req.Header.Add("Authorization", "Bearer "+token)
@@ -262,17 +235,12 @@ func People(ctx context.Context, personId string) (*PeopleResponse, error) {
 	return &response, nil
 }
 
-func PeopleCredits(ctx context.Context, personId string) (*PeopleCreditsResponse, error) {
+func PeopleCredits(ctx context.Context, token string, personId string) (*PeopleCreditsResponse, error) {
 	client := http.Client{}
 
 	req, err := http.NewRequestWithContext(ctx, "GET", fmt.Sprintf("https://api.themoviedb.org/3/person/%s/movie_credits", personId), nil)
 	if err != nil {
 		return nil, err
-	}
-
-	token, ok := os.LookupEnv("TMDB_TOKEN")
-	if !ok {
-		return nil, errors.New("TMDB_TOKEN is not set")
 	}
 
 	req.Header.Add("Authorization", "Bearer "+token)

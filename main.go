@@ -5,15 +5,33 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"slices"
 	"time"
 
 	"github.com/a-h/templ"
 	"github.com/m4tthewde/blunt/components"
 	"github.com/m4tthewde/blunt/tmdb"
+	"gopkg.in/yaml.v3"
 )
 
+type Config struct {
+	Token string `yaml:"token"`
+}
+
+var config Config
+
 func main() {
+	data, err := os.ReadFile("config.yaml")
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	err = yaml.Unmarshal(data, &config)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
 	http.Handle("/", templ.Handler(components.Index()))
 	http.HandleFunc("/search", search)
 	http.HandleFunc("GET /movie/{id}", movie)
@@ -32,13 +50,13 @@ func search(w http.ResponseWriter, r *http.Request) {
 
 	search := r.FormValue("search")
 
-	movieResponse, err := tmdb.SearchMovies(r.Context(), search)
+	movieResponse, err := tmdb.SearchMovies(r.Context(), config.Token, search)
 	if err != nil {
 		w.WriteHeader(500)
 		return
 	}
 
-	peopleResponse, err := tmdb.SearchPeople(r.Context(), search)
+	peopleResponse, err := tmdb.SearchPeople(r.Context(), config.Token, search)
 	if err != nil {
 		w.WriteHeader(500)
 		return
@@ -78,13 +96,13 @@ func search(w http.ResponseWriter, r *http.Request) {
 func movie(w http.ResponseWriter, r *http.Request) {
 	idString := r.PathValue("id")
 
-	movieDetails, err := tmdb.MovieDetails(r.Context(), idString)
+	movieDetails, err := tmdb.MovieDetails(r.Context(), config.Token, idString)
 	if err != nil {
 		w.WriteHeader(500)
 		return
 	}
 
-	credits, err := tmdb.Credits(r.Context(), idString)
+	credits, err := tmdb.Credits(r.Context(), config.Token, idString)
 	if err != nil {
 		w.WriteHeader(500)
 		return
@@ -96,13 +114,13 @@ func movie(w http.ResponseWriter, r *http.Request) {
 func castMember(w http.ResponseWriter, r *http.Request) {
 	idString := r.PathValue("id")
 
-	people, err := tmdb.People(r.Context(), idString)
+	people, err := tmdb.People(r.Context(), config.Token, idString)
 	if err != nil {
 		w.WriteHeader(500)
 		return
 	}
 
-	peopleCredits, err := tmdb.PeopleCredits(r.Context(), idString)
+	peopleCredits, err := tmdb.PeopleCredits(r.Context(), config.Token, idString)
 	if err != nil {
 		w.WriteHeader(500)
 		return
