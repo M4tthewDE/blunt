@@ -245,6 +245,9 @@ func PeopleCredits(ctx context.Context, personId string) (*PeopleCreditsResponse
 }
 
 func BuildPosterPath(posterPath string) string {
+	if posterPath == "" {
+		return "https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-38-picture-grey-c2ebdbb057f2a7614185931650f8cee23fa137b93812ccb132b9df511df1cfac.svg"
+	}
 	return "https://image.tmdb.org/t/p/w600_and_h900_bestv2" + posterPath
 }
 

@@ -31,8 +31,6 @@ templ CastMember(peopleResponse tmdb.PeopleResponse, credits []tmdb.PeopleCredit
 						<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Homepage:</span>
 						<span style="grid-column-start: 2;">{ peopleResponse.Homepage }</span>
 					}
-					<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Total credits:</span>
-					<span style="grid-column-start: 2;">{ len(credits) }</span>
 				</div>
 			</div>
 		</div>
@@ -41,7 +39,7 @@ templ CastMember(peopleResponse tmdb.PeopleResponse, credits []tmdb.PeopleCredit
 				background-color: #e6f3ff;
 			}
 		</style>
-		<h1 style="text-align: center;">Credits</h1>
+		<h1 style="text-align: center;">Credits({ len(credits) })</h1>
 		<div style="margin: auto; width: 50%; display: grid; justify-content: center; gap: 1rem;">
 			for _, credit := range credits {
 				<a href={ movieHref(credit.Id) } class="credit" style="display: grid; justify-content: start; text-decoration: none; color: inherit;">
