@@ -1,0 +1,37 @@
+package components
+
+import (
+	"github.com/m4tthewde/blunt/tmdb"
+)
+
+templ CastMember(peopleResponse tmdb.PeopleResponse, credits []tmdb.PeopleCredit) {
+	<html>
+		<h1 style="margin-top: 0px; text-align: center;">{ peopleResponse.Name }</h1>
+		<div style="display: grid; align-items: start; justify-content: start; margin: auto; width: 50%;">
+			<img src={ tmdb.BuildPosterPath(peopleResponse.ProfilePath) } width="180" height="270" style="grid-column-start: 1; padding-right: 10px;">
+			<div style="grid-column-start: 2;">
+				<div style="display: grid; align-items: start; justify-content: start;">
+					<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Birthday:</span>
+					<span style="grid-column-start: 2;">{ peopleResponse.Birthday }</span>
+					<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Deathday:</span>
+					<span style="grid-column-start: 2;">{ peopleResponse.Deathday }</span>
+				</div>
+				<p>{ peopleResponse.Biography }</p>
+			</div>
+		</div>
+		<style>
+			.credit:hover {
+				background-color: #e6f3ff;
+			}
+		</style>
+		<h1 style="text-align: center;">Credits</h1>
+		<div style="margin: auto; width: 50%; display: grid; justify-content: center;">
+			for _, credit := range credits {
+				<a href={ movieHref(credit.Id) } class="credit" style="display: grid; justify-content: start; text-decoration: none;">
+					<img src={ tmdb.BuildPosterPath(credit.PosterPath) } width="120" height="180" style="padding-right: 10px;">
+					<span style="grid-column-start: 2;">{ credit.OriginalTitle }</span>
+				</a>
+			}		
+		</div>
+	</html>
+}

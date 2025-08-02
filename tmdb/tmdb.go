@@ -47,6 +47,26 @@ type MovieCastMember struct {
 	ProfilePath string `json:"profile_path"`
 }
 
+type PeopleResponse struct {
+	Id          int64  `json:"id"`
+	Name        string `json:"name"`
+	ProfilePath string `json:"profile_path"`
+	Birthday    string `json:"birthday"`
+	Deathday    string `json:"deathday"`
+	Biography   string `json:"biography"`
+}
+
+type PeopleCreditsResponse struct {
+	Cast []PeopleCredit `json:"cast"`
+}
+
+type PeopleCredit struct {
+	Id            int64  `json:"id"`
+	OriginalTitle string `json:"original_title"`
+	PosterPath    string `json:"poster_path"`
+	ReleaseDate   string `json:"release_date"`
+}
+
 func SearchMovies(ctx context.Context, search string) (*MovieSearchResponse, error) {
 	client := http.Client{}
 
@@ -150,6 +170,72 @@ func Credits(ctx context.Context, movieId string) (*MovieCreditsResponse, error)
 	}
 
 	var response MovieCreditsResponse
+	json.Unmarshal(body, &response)
+
+	return &response, nil
+}
+
+func People(ctx context.Context, personId string) (*PeopleResponse, error) {
+	client := http.Client{}
+
+	req, err := http.NewRequestWithContext(ctx, "GET", fmt.Sprintf("https://api.themoviedb.org/3/person/%s", personId), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	token, ok := os.LookupEnv("TMDB_TOKEN")
+	if !ok {
+		return nil, errors.New("TMDB_TOKEN is not set")
+	}
+
+	req.Header.Add("Authorization", "Bearer "+token)
+
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var response PeopleResponse
+	json.Unmarshal(body, &response)
+
+	return &response, nil
+}
+
+func PeopleCredits(ctx context.Context, personId string) (*PeopleCreditsResponse, error) {
+	client := http.Client{}
+
+	req, err := http.NewRequestWithContext(ctx, "GET", fmt.Sprintf("https://api.themoviedb.org/3/person/%s/movie_credits", personId), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	token, ok := os.LookupEnv("TMDB_TOKEN")
+	if !ok {
+		return nil, errors.New("TMDB_TOKEN is not set")
+	}
+
+	req.Header.Add("Authorization", "Bearer "+token)
+
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var response PeopleCreditsResponse
 	json.Unmarshal(body, &response)
 
 	return &response, nil

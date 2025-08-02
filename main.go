@@ -15,6 +15,7 @@ func main() {
 	http.Handle("/", templ.Handler(components.Index()))
 	http.HandleFunc("/movie_search", movie_search)
 	http.HandleFunc("GET /movie/{id}", movie)
+	http.HandleFunc("GET /castMember/{id}", castMember)
 
 	log.Println("Starting server on port 8080")
 	http.ListenAndServe(":8080", nil)
@@ -60,4 +61,22 @@ func movie(w http.ResponseWriter, r *http.Request) {
 	}
 
 	components.Movie(*movieDetails, credits.Cast).Render(r.Context(), w)
+}
+
+func castMember(w http.ResponseWriter, r *http.Request) {
+	idString := r.PathValue("id")
+
+	people, err := tmdb.People(r.Context(), idString)
+	if err != nil {
+		w.WriteHeader(500)
+		return
+	}
+
+	peopleCredits, err := tmdb.PeopleCredits(r.Context(), idString)
+	if err != nil {
+		w.WriteHeader(500)
+		return
+	}
+
+	components.CastMember(*people, peopleCredits.Cast).Render(r.Context(), w)
 }
