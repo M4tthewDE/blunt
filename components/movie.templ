@@ -6,8 +6,8 @@ import (
 
 templ Movie(movieDetails tmdb.MovieDetailsResponse, cast []tmdb.MovieCastMember) {
 	<html>
-		<h1 style="margin-top: 0px;">{ movieDetails.OriginalTitle }</h1>
-		<div style="display: grid; align-items: start; justify-content: start">
+		<h1 style="margin-top: 0px; text-align: center;">{ movieDetails.OriginalTitle }</h1>
+		<div style="display: grid; align-items: start; justify-content: start; margin: auto; width: 50%;">
 			<img src={ tmdb.BuildPosterPath(movieDetails.PosterPath) } width="180" height="270" style="grid-column-start: 1; padding-right: 10px;">
 			<div style="grid-column-start: 2;">
 				<div style="display: grid; align-items: start; justify-content: start;">
@@ -25,23 +25,20 @@ templ Movie(movieDetails tmdb.MovieDetailsResponse, cast []tmdb.MovieCastMember)
 				<p>{ movieDetails.Overview }</p>
 			</div>
 		</div>
-		<h1>Cast</h1>
+		<h1 style="text-align: center;">Cast</h1>
 		<style>
 			.cast-member:hover {
 				background-color: #e6f3ff;
 			}
 		</style>
-		<ul style="list-style-type: none; padding-left: 0px;">
+		<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
 			for _, castMember := range cast {
-				<li class="cast-member" style="display:grid; align-items: center; justify-content: start;">
+				<div style="display: grid; justify-items: center;">
 					<img src={ tmdb.BuildPosterPath(castMember.ProfilePath) } width="120" height="180" style="padding-right: 10px;">
-					<div style="grid-column-start: 2;">
-						<span>{ castMember.Name }</span>
-						<span style="color: grey;">as</span>
-						<span>{ castMember.Character }</span>
-					</div>
-				</li>
+					<span style="text-align: center;">{ castMember.Name }</span>
+					<span style="color: grey; text-align: center;">{ castMember.Character }</span>
+				</div>
 			}		
-		</ul>
+		</div>
 	</html>
 }
