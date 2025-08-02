@@ -3,7 +3,7 @@ package components
 templ Index() {
 	<script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js"></script>
 	<html>
-		<div style="margin: auto; width: 50%; justify-items: center;">
+		<div style="margin: auto; width: 50%; justify-items: center; padding-bottom: 1rem;">
 			<h1 style="text-align: center;">Movie Explorer</h1>
 			<input type="search"
 				name="movie_search"
@@ -13,7 +13,7 @@ templ Index() {
 				hx-target="#movie-search-results"
 				style="margin: auto; display: block;"
 			>
-			<div id="movie-search-results"></div>
 		</div>
+		<div id="movie-search-results"></div>
 	</html>
 }

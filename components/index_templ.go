@@ -29,7 +29,7 @@ func Index() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script src=\"https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js\"></script><html><div style=\"margin: auto; width: 50%; justify-items: center;\"><h1 style=\"text-align: center;\">Movie Explorer</h1><input type=\"search\" name=\"movie_search\" placeholder=\"Search Movies...\" hx-post=\"/movie_search\" hx-trigger=\"input changed delay:500ms\" hx-target=\"#movie-search-results\" style=\"margin: auto; display: block;\"><div id=\"movie-search-results\"></div></div></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script src=\"https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js\"></script><html><div style=\"margin: auto; width: 50%; justify-items: center; padding-bottom: 1rem;\"><h1 style=\"text-align: center;\">Movie Explorer</h1><input type=\"search\" name=\"movie_search\" placeholder=\"Search Movies...\" hx-post=\"/movie_search\" hx-trigger=\"input changed delay:500ms\" hx-target=\"#movie-search-results\" style=\"margin: auto; display: block;\"></div><div id=\"movie-search-results\"></div></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

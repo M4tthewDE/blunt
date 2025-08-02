@@ -38,7 +38,7 @@ templ Movie(movieDetails tmdb.MovieDetailsResponse, cast []tmdb.MovieCastMember)
 		</style>
 		<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
 			for _, castMember := range cast {
-				<a href={ castMemberHref(castMember.Id) } class="cast-member" style="display: grid; justify-items: center; text-decoration: none;">
+				<a href={ castMemberHref(castMember.Id) } class="cast-member" style="display: grid; justify-items: center; text-decoration: none; color: inherit;">
 					<img src={ tmdb.BuildPosterPath(castMember.ProfilePath) } width="120" height="180" style="padding-right: 10px;">
 					<span style="text-align: center;">{ castMember.Name }</span>
 					<span style="color: grey; text-align: center;">{ castMember.Character }</span>
