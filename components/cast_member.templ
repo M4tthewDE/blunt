@@ -11,10 +11,28 @@ templ CastMember(peopleResponse tmdb.PeopleResponse, credits []tmdb.PeopleCredit
 			<img src={ tmdb.BuildPosterPath(peopleResponse.ProfilePath) } width="180" height="270" style="grid-column-start: 1; padding-right: 10px;">
 			<div style="grid-column-start: 2;">
 				<div style="display: grid; align-items: start; justify-content: start;">
-					<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Birthday:</span>
-					<span style="grid-column-start: 2;">{ peopleResponse.Birthday }</span>
-					<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Deathday:</span>
-					<span style="grid-column-start: 2;">{ peopleResponse.Deathday }</span>
+					if peopleResponse.Birthday != "" {
+						<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Birthday:</span>
+						<span style="grid-column-start: 2;">{ peopleResponse.Birthday }</span>
+					}
+					if peopleResponse.Deathday != "" {
+						<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Deathday:</span>
+						<span style="grid-column-start: 2;">{ peopleResponse.Deathday }</span>
+					}
+					if peopleResponse.PlaceOfBirth != "" {
+						<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Place of birth:</span>
+						<span style="grid-column-start: 2;">{ peopleResponse.PlaceOfBirth }</span>
+					}
+					if peopleResponse.KnownForDepartment != "" {
+						<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Known for:</span>
+						<span style="grid-column-start: 2;">{ peopleResponse.KnownForDepartment }</span>
+					}
+					if peopleResponse.Homepage != "" {
+						<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Homepage:</span>
+						<span style="grid-column-start: 2;">{ peopleResponse.Homepage }</span>
+					}
+					<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Total credits:</span>
+					<span style="grid-column-start: 2;">{ len(credits) }</span>
 				</div>
 			</div>
 		</div>

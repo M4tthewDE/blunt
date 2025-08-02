@@ -48,12 +48,15 @@ type MovieCastMember struct {
 }
 
 type PeopleResponse struct {
-	Id          int64  `json:"id"`
-	Name        string `json:"name"`
-	ProfilePath string `json:"profile_path"`
-	Birthday    string `json:"birthday"`
-	Deathday    string `json:"deathday"`
-	Biography   string `json:"biography"`
+	Id                 int64  `json:"id"`
+	Name               string `json:"name"`
+	ProfilePath        string `json:"profile_path"`
+	Birthday           string `json:"birthday"`
+	Deathday           string `json:"deathday"`
+	Biography          string `json:"biography"`
+	KnownForDepartment string `json:"known_for_department"`
+	Homepage           string `json:"homepage"`
+	PlaceOfBirth       string `json:"place_of_birth"`
 }
 
 type PeopleCreditsResponse struct {
