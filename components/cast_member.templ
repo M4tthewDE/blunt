@@ -33,6 +33,10 @@ templ CastMember(peopleResponse tmdb.PeopleResponse, credits []tmdb.PeopleCredit
 						<span style="grid-column-start: 2;">{ peopleResponse.Homepage }</span>
 					}
 				</div>
+				<hr>
+				<a href={ fmt.Sprintf("/castMember/%d/graph", peopleResponse.Id) }>
+					<button>Graph</button>
+				</a>
 			</div>
 		</div>
 		<style>

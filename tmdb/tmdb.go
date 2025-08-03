@@ -50,10 +50,11 @@ type MovieCreditsResponse struct {
 }
 
 type MovieCastMember struct {
-	Id          int64  `json:"id"`
-	Name        string `json:"name"`
-	Character   string `json:"character"`
-	ProfilePath string `json:"profile_path"`
+	Id          int64   `json:"id"`
+	Name        string  `json:"name"`
+	Character   string  `json:"character"`
+	ProfilePath string  `json:"profile_path"`
+	Popularity  float64 `json:"popularity"`
 }
 
 type PeopleResponse struct {
@@ -73,10 +74,11 @@ type PeopleCreditsResponse struct {
 }
 
 type PeopleCredit struct {
-	Id            int64  `json:"id"`
-	OriginalTitle string `json:"original_title"`
-	PosterPath    string `json:"poster_path"`
-	ReleaseDate   string `json:"release_date"`
+	Id            int64   `json:"id"`
+	OriginalTitle string  `json:"original_title"`
+	PosterPath    string  `json:"poster_path"`
+	ReleaseDate   string  `json:"release_date"`
+	Popularity    float64 `json:"popularity"`
 }
 
 func SearchMovies(ctx context.Context, token string, search string) (*MovieSearchResponse, error) {

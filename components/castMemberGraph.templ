@@ -1,0 +1,46 @@
+package components
+
+import "fmt"
+
+type GraphElement struct {
+	Id int64
+	ImagePath string
+}
+
+func subGraphPath(graphElement GraphElement, subGraphType string) string {
+	return fmt.Sprintf("/subGraph/%s/%d", subGraphType, graphElement.Id)
+}
+
+func subGraphId(subGraphType string, id int64) string {
+	return fmt.Sprintf("subgraph-%s-%d", subGraphType, id)
+}
+
+templ CastMemberGraph(parent GraphElement, graph []GraphElement, subGraphType string) {
+	<script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js"></script>
+	<html>
+		<div style="margin: auto; width: 50%; display: grid; align-items: start; justify-items: center; padding-bottom: 1rem;">
+			<img src={ parent.ImagePath } width="90" height="135"></img>
+			@CastMemberSubGraph(graph, subGraphType)
+		</div>
+	</html>
+}
+
+templ CastMemberSubGraph(graph []GraphElement, subGraphType string) {
+	<div style="overflow: auto; padding: 10px; justify-content: center;">
+		<div style="display: flex; gap: 20px; min-width: max-content;">
+			for _, child := range graph {
+				<div style="display: flex; flex-direction: column; align-items: center; flex-shrink: 0">
+					<button
+						hx-post={ subGraphPath(child, subGraphType) }
+						hx-trigger="click"
+						hx-target={ fmt.Sprintf("#%s", subGraphId(subGraphType, child.Id)) }
+						hx-swap="outerHTML"
+					>
+						<img src={ child.ImagePath } width="90" height="135"></img>
+					</button>
+					<div id={ subGraphId(subGraphType, child.Id) }></div>
+				</div>
+			}	
+		</div>
+	</div>
+}

@@ -36,6 +36,9 @@ func main() {
 	http.HandleFunc("/search", search)
 	http.HandleFunc("GET /movie/{id}", movie)
 	http.HandleFunc("GET /castMember/{id}", castMember)
+	http.HandleFunc("GET /castMember/{id}/graph", castMemberGraph)
+	http.HandleFunc("POST /subGraph/movie/{id}", subGraphMovie)
+	http.HandleFunc("POST /subGraph/person/{id}", subGraphPerson)
 
 	log.Println("Starting server on port 8080")
 	http.ListenAndServe(":8080", nil)
@@ -153,4 +156,96 @@ func castMember(w http.ResponseWriter, r *http.Request) {
 	)
 
 	components.CastMember(*people, cast).Render(r.Context(), w)
+}
+
+func castMemberGraph(w http.ResponseWriter, r *http.Request) {
+	idString := r.PathValue("id")
+
+	person, err := tmdb.People(r.Context(), config.Token, idString)
+	if err != nil {
+		w.WriteHeader(500)
+		return
+	}
+
+	credits, err := tmdb.PeopleCredits(r.Context(), config.Token, idString)
+	if err != nil {
+		w.WriteHeader(500)
+		return
+	}
+
+	slices.SortFunc(credits.Cast,
+		func(a, b tmdb.PeopleCredit) int {
+			return cmp.Compare(b.Popularity, a.Popularity)
+		},
+	)
+
+	children := make([]components.GraphElement, 0)
+
+	for _, credit := range credits.Cast[0:5] {
+		graphElement := components.GraphElement{
+			Id:        credit.Id,
+			ImagePath: tmdb.BuildPosterPath(credit.PosterPath),
+		}
+
+		children = append(children, graphElement)
+	}
+
+	parent := components.GraphElement{
+		Id:        person.Id,
+		ImagePath: tmdb.BuildPosterPath(person.ProfilePath),
+	}
+
+	components.CastMemberGraph(parent, children, "movie").Render(r.Context(), w)
+}
+
+func subGraphMovie(w http.ResponseWriter, r *http.Request) {
+	id := r.PathValue("id")
+
+	credits, err := tmdb.Credits(r.Context(), config.Token, id)
+	if err != nil {
+		w.WriteHeader(500)
+		return
+	}
+
+	children := make([]components.GraphElement, 0)
+
+	for _, credit := range credits.Cast[:5] {
+		graphElement := components.GraphElement{
+			Id:        credit.Id,
+			ImagePath: tmdb.BuildPosterPath(credit.ProfilePath),
+		}
+
+		children = append(children, graphElement)
+	}
+
+	components.CastMemberSubGraph(children, "person").Render(r.Context(), w)
+}
+
+func subGraphPerson(w http.ResponseWriter, r *http.Request) {
+	id := r.PathValue("id")
+
+	credits, err := tmdb.PeopleCredits(r.Context(), config.Token, id)
+	if err != nil {
+		w.WriteHeader(500)
+		return
+	}
+
+	slices.SortFunc(credits.Cast,
+		func(a, b tmdb.PeopleCredit) int {
+			return cmp.Compare(b.Popularity, a.Popularity)
+		},
+	)
+
+	children := make([]components.GraphElement, 0)
+
+	for _, credit := range credits.Cast[:5] {
+		graphElement := components.GraphElement{
+			Id:        credit.Id,
+			ImagePath: tmdb.BuildPosterPath(credit.PosterPath),
+		}
+
+		children = append(children, graphElement)
+	}
+
+	components.CastMemberSubGraph(children, "movie").Render(r.Context(), w)
 }
