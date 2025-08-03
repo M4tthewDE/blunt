@@ -126,7 +126,14 @@ func castMember(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	slices.SortFunc(peopleCredits.Cast,
+	cast := make([]tmdb.PeopleCredit, 0)
+	for _, c := range peopleCredits.Cast {
+		if c.ReleaseDate != "" {
+			cast = append(cast, c)
+		}
+	}
+
+	slices.SortFunc(cast,
 		func(a, b tmdb.PeopleCredit) int {
 			timeA, err := time.Parse(time.DateOnly, a.ReleaseDate)
 			if err != nil {
@@ -137,13 +144,13 @@ func castMember(w http.ResponseWriter, r *http.Request) {
 				return 0
 			}
 
-			if timeB.Before(timeA) {
-				return -1
+			if timeA.Before(timeB) {
+				return 1
 			}
 
-			return 1
+			return -1
 		},
 	)
 
-	components.CastMember(*people, peopleCredits.Cast).Render(r.Context(), w)
+	components.CastMember(*people, cast).Render(r.Context(), w)
 }
