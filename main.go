@@ -253,7 +253,7 @@ func subGraphMovie(w http.ResponseWriter, r *http.Request) {
 		children = append(children, graphElement)
 	}
 
-	components.SubGraph(children, "movie", "person", credits.Id).Render(r.Context(), w)
+	components.SubGraph(children, "person", credits.Id).Render(r.Context(), w)
 }
 
 func subGraphPerson(w http.ResponseWriter, r *http.Request) {
@@ -282,5 +282,5 @@ func subGraphPerson(w http.ResponseWriter, r *http.Request) {
 		children = append(children, graphElement)
 	}
 
-	components.SubGraph(children, "person", "movie", credits.Id).Render(r.Context(), w)
+	components.SubGraph(children, "movie", credits.Id).Render(r.Context(), w)
 }

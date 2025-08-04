@@ -37,32 +37,30 @@ templ Graph(parent GraphElement, graph []GraphElement, graphType string) {
 					hx-post={ subGraphPath(parent, graphType) }
 					hx-trigger="click"
 					hx-target={ fmt.Sprintf("#%s", subGraphId(graphType, parent.Id)) }
-					hx-swap="outerHTML"
+					hx-swap="innerHTML"
 				>
 					<img src={ parent.ImagePath } width="90" height="135"></img>
 				</button>
 			</div>
-			<div id={ subGraphId(graphType, parent.Id) }></div>
+			<div style="display: flex; justify-items: center;" id={ subGraphId(graphType, parent.Id) }></div>
 		</div>
 	</html>
 }
 
-templ SubGraph(graph []GraphElement, graphType, subGraphType string, id int64) {
-	<div style="display: flex; justify-items: center;" id={ subGraphId(graphType, id) }>
-		for _, child := range graph {
-			<div>
-				<div style="display: flex; justify-content: center; padding-bottom: 1rem;">
-					<button
-						hx-post={ subGraphPath(child, subGraphType) }
-						hx-trigger="click"
-						hx-target={ fmt.Sprintf("#%s", subGraphId(subGraphType, child.Id)) }
-						hx-swap="outerHTML"
-					>
-						<img src={ child.ImagePath } width="90" height="135"></img>
-					</button>
-				</div>
-				<div id={ subGraphId(subGraphType, child.Id) }></div>
+templ SubGraph(graph []GraphElement, subGraphType string, id int64) {
+	for _, child := range graph {
+		<div>
+			<div style="display: flex; justify-content: center; padding-bottom: 1rem;">
+				<button
+					hx-post={ subGraphPath(child, subGraphType) }
+					hx-trigger="click"
+					hx-target={ fmt.Sprintf("#%s", subGraphId(subGraphType, child.Id)) }
+					hx-swap="innerHTML"
+				>
+					<img src={ child.ImagePath } width="90" height="135"></img>
+				</button>
 			</div>
-		}
-	</div>
+			<div style="display: flex; justify-items: center;" id={ subGraphId(subGraphType, child.Id) }></div>
+		</div>
+	}
 }
