@@ -18,18 +18,18 @@ func subGraphId(subGraphType string, id int64) string {
 templ CastMemberGraph(parent GraphElement, graph []GraphElement, subGraphType string) {
 	<script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js"></script>
 	<html>
-		<div style="margin: auto; width: 50%; display: grid; align-items: start; justify-items: center; padding-bottom: 1rem;">
-			<img src={ parent.ImagePath } width="90" height="135"></img>
+		<div style="margin: auto; width: 50%; display: grid; align-items: start; justify-items: center;">
+			<img src={ parent.ImagePath } width="90" height="135" style="padding-bottom: 1rem;"></img>
 			@CastMemberSubGraph(graph, subGraphType)
 		</div>
 	</html>
 }
 
 templ CastMemberSubGraph(graph []GraphElement, subGraphType string) {
-	<div style="overflow: auto; padding: 10px; justify-content: center;">
-		<div style="display: flex; gap: 20px; min-width: max-content;">
-			for _, child := range graph {
-				<div style="display: flex; flex-direction: column; align-items: center; flex-shrink: 0">
+	<div style="display: flex; justify-items: center;">
+		for _, child := range graph {
+			<div>
+				<div style="display: flex; justify-content: center; padding-bottom: 1rem;">
 					<button
 						hx-post={ subGraphPath(child, subGraphType) }
 						hx-trigger="click"
@@ -38,9 +38,9 @@ templ CastMemberSubGraph(graph []GraphElement, subGraphType string) {
 					>
 						<img src={ child.ImagePath } width="90" height="135"></img>
 					</button>
-					<div id={ subGraphId(subGraphType, child.Id) }></div>
 				</div>
-			}	
-		</div>
+				<div id={ subGraphId(subGraphType, child.Id) }></div>
+			</div>
+		}
 	</div>
 }
