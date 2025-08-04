@@ -196,7 +196,7 @@ func castMemberGraph(w http.ResponseWriter, r *http.Request) {
 		ImagePath: tmdb.BuildPosterPath(person.ProfilePath),
 	}
 
-	components.Graph(parent, children, "person", "movie").Render(r.Context(), w)
+	components.Graph(parent, children, "person").Render(r.Context(), w)
 }
 
 func movieGraph(w http.ResponseWriter, r *http.Request) {
@@ -230,7 +230,7 @@ func movieGraph(w http.ResponseWriter, r *http.Request) {
 		ImagePath: tmdb.BuildPosterPath(movie.PosterPath),
 	}
 
-	components.Graph(parent, children, "movie", "person").Render(r.Context(), w)
+	components.Graph(parent, children, "movie").Render(r.Context(), w)
 }
 
 func subGraphMovie(w http.ResponseWriter, r *http.Request) {
