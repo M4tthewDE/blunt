@@ -15,7 +15,7 @@ func subGraphId(subGraphType string, id int64) string {
 	return fmt.Sprintf("subgraph-%s-%d", subGraphType, id)
 }
 
-templ CastMemberGraph(parent GraphElement, graph []GraphElement, graphType, subGraphType string) {
+templ Graph(parent GraphElement, graph []GraphElement, graphType, subGraphType string) {
 	<script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js"></script>
 	<script>
 		htmx.on("htmx:beforeRequest", function(evt) {
@@ -33,12 +33,12 @@ templ CastMemberGraph(parent GraphElement, graph []GraphElement, graphType, subG
 	<html>
 		<div style="margin: auto; width: 50%; display: grid; align-items: start; justify-items: center;">
 			<img src={ parent.ImagePath } width="90" height="135" style="padding-bottom: 1rem;"></img>
-			@CastMemberSubGraph(graph, graphType, subGraphType, parent.Id)
+			@SubGraph(graph, graphType, subGraphType, parent.Id)
 		</div>
 	</html>
 }
 
-templ CastMemberSubGraph(graph []GraphElement, graphType, subGraphType string, id int64) {
+templ SubGraph(graph []GraphElement, graphType, subGraphType string, id int64) {
 	<div style="display: flex; justify-items: center;" id={ subGraphId(graphType, id) }>
 		for _, child := range graph {
 			<div>

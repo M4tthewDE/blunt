@@ -37,6 +37,7 @@ func main() {
 	http.HandleFunc("GET /movie/{id}", movie)
 	http.HandleFunc("GET /castMember/{id}", castMember)
 	http.HandleFunc("GET /castMember/{id}/graph", castMemberGraph)
+	http.HandleFunc("GET /movie/{id}/graph", movieGraph)
 	http.HandleFunc("POST /subGraph/movie/{id}", subGraphMovie)
 	http.HandleFunc("POST /subGraph/person/{id}", subGraphPerson)
 
@@ -195,7 +196,41 @@ func castMemberGraph(w http.ResponseWriter, r *http.Request) {
 		ImagePath: tmdb.BuildPosterPath(person.ProfilePath),
 	}
 
-	components.CastMemberGraph(parent, children, "person", "movie").Render(r.Context(), w)
+	components.Graph(parent, children, "person", "movie").Render(r.Context(), w)
+}
+
+func movieGraph(w http.ResponseWriter, r *http.Request) {
+	idString := r.PathValue("id")
+
+	movie, err := tmdb.MovieDetails(r.Context(), config.Token, idString)
+	if err != nil {
+		w.WriteHeader(500)
+		return
+	}
+
+	credits, err := tmdb.Credits(r.Context(), config.Token, idString)
+	if err != nil {
+		w.WriteHeader(500)
+		return
+	}
+
+	children := make([]components.GraphElement, 0)
+
+	for _, credit := range credits.Cast[0:5] {
+		graphElement := components.GraphElement{
+			Id:        credit.Id,
+			ImagePath: tmdb.BuildPosterPath(credit.ProfilePath),
+		}
+
+		children = append(children, graphElement)
+	}
+
+	parent := components.GraphElement{
+		Id:        movie.Id,
+		ImagePath: tmdb.BuildPosterPath(movie.PosterPath),
+	}
+
+	components.Graph(parent, children, "movie", "person").Render(r.Context(), w)
 }
 
 func subGraphMovie(w http.ResponseWriter, r *http.Request) {
@@ -218,7 +253,7 @@ func subGraphMovie(w http.ResponseWriter, r *http.Request) {
 		children = append(children, graphElement)
 	}
 
-	components.CastMemberSubGraph(children, "movie", "person", credits.Id).Render(r.Context(), w)
+	components.SubGraph(children, "movie", "person", credits.Id).Render(r.Context(), w)
 }
 
 func subGraphPerson(w http.ResponseWriter, r *http.Request) {
@@ -247,5 +282,5 @@ func subGraphPerson(w http.ResponseWriter, r *http.Request) {
 		children = append(children, graphElement)
 	}
 
-	components.CastMemberSubGraph(children, "person", "movie", credits.Id).Render(r.Context(), w)
+	components.SubGraph(children, "person", "movie", credits.Id).Render(r.Context(), w)
 }

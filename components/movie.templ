@@ -28,6 +28,10 @@ templ Movie(movieDetails tmdb.MovieDetailsResponse, cast []tmdb.MovieCastMember)
 					<span style="grid-column-start: 2;">${ movieDetails.Revenue }</span>
 				</div>
 				<p>{ movieDetails.Overview }</p>
+				<hr>
+				<a href={ fmt.Sprintf("/movie/%d/graph", movieDetails.Id) }>
+					<button>Graph</button>
+				</a>
 			</div>
 		</div>
 		<h1 style="text-align: center;">Cast</h1>
