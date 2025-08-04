@@ -47,6 +47,7 @@ type MovieDetailsResponse struct {
 
 type MovieCreditsResponse struct {
 	Cast []MovieCastMember `json:"cast"`
+	Id   int64             `json:"id"`
 }
 
 type MovieCastMember struct {
@@ -71,6 +72,7 @@ type PeopleResponse struct {
 
 type PeopleCreditsResponse struct {
 	Cast []PeopleCredit `json:"cast"`
+	Id   int64          `json:"id"`
 }
 
 type PeopleCredit struct {
