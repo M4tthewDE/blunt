@@ -11,11 +11,11 @@ func subGraphPath(graphElement GraphElement, subGraphType string) string {
 	return fmt.Sprintf("/subGraph/%s/%d", subGraphType, graphElement.Id)
 }
 
-func subGraphId(subGraphType string, id int64) string {
-	return fmt.Sprintf("subgraph-%s-%d", subGraphType, id)
+func subGraphId(subGraphType string, id int64, identifier string) string {
+	return fmt.Sprintf("subgraph-%s-%d-%s", subGraphType, id, identifier)
 }
 
-templ Graph(parent GraphElement, graph []GraphElement, graphType string) {
+templ Graph(parent GraphElement, graph []GraphElement, graphType, identifier string) {
 	<script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js"></script>
 	<script>
 		htmx.on("htmx:beforeRequest", function(evt) {
@@ -36,31 +36,31 @@ templ Graph(parent GraphElement, graph []GraphElement, graphType string) {
 				<button
 					hx-post={ subGraphPath(parent, graphType) }
 					hx-trigger="click"
-					hx-target={ fmt.Sprintf("#%s", subGraphId(graphType, parent.Id)) }
+					hx-target={ fmt.Sprintf("#%s", subGraphId(graphType, parent.Id, identifier)) }
 					hx-swap="innerHTML"
 				>
 					<img src={ parent.ImagePath } width="90" height="135"></img>
 				</button>
 			</div>
-			<div style="display: flex; justify-items: center;" id={ subGraphId(graphType, parent.Id) }></div>
+			<div style="display: flex; justify-items: center;" id={ subGraphId(graphType, parent.Id, identifier) }></div>
 		</div>
 	</html>
 }
 
-templ SubGraph(graph []GraphElement, subGraphType string, id int64) {
+templ SubGraph(graph []GraphElement, subGraphType string, id int64, identifier string) {
 	for _, child := range graph {
 		<div>
 			<div style="display: flex; justify-content: center; padding-bottom: 1rem;">
 				<button
 					hx-post={ subGraphPath(child, subGraphType) }
 					hx-trigger="click"
-					hx-target={ fmt.Sprintf("#%s", subGraphId(subGraphType, child.Id)) }
+					hx-target={ fmt.Sprintf("#%s", subGraphId(subGraphType, child.Id, identifier)) }
 					hx-swap="innerHTML"
 				>
 					<img src={ child.ImagePath } width="90" height="135"></img>
 				</button>
 			</div>
-			<div style="display: flex; justify-items: center;" id={ subGraphId(subGraphType, child.Id) }></div>
+			<div style="display: flex; justify-items: center;" id={ subGraphId(subGraphType, child.Id, identifier) }></div>
 		</div>
 	}
 }

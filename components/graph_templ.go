@@ -19,11 +19,11 @@ func subGraphPath(graphElement GraphElement, subGraphType string) string {
 	return fmt.Sprintf("/subGraph/%s/%d", subGraphType, graphElement.Id)
 }
 
-func subGraphId(subGraphType string, id int64) string {
-	return fmt.Sprintf("subgraph-%s-%d", subGraphType, id)
+func subGraphId(subGraphType string, id int64, identifier string) string {
+	return fmt.Sprintf("subgraph-%s-%d-%s", subGraphType, id, identifier)
 }
 
-func Graph(parent GraphElement, graph []GraphElement, graphType string) templ.Component {
+func Graph(parent GraphElement, graph []GraphElement, graphType, identifier string) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -62,9 +62,9 @@ func Graph(parent GraphElement, graph []GraphElement, graphType string) templ.Co
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var3 string
-		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("#%s", subGraphId(graphType, parent.Id)))
+		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("#%s", subGraphId(graphType, parent.Id, identifier)))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/graph.templ`, Line: 39, Col: 69}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/graph.templ`, Line: 39, Col: 81}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -88,9 +88,9 @@ func Graph(parent GraphElement, graph []GraphElement, graphType string) templ.Co
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var5 string
-		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(subGraphId(graphType, parent.Id))
+		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(subGraphId(graphType, parent.Id, identifier))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/graph.templ`, Line: 45, Col: 91}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/graph.templ`, Line: 45, Col: 103}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
@@ -104,7 +104,7 @@ func Graph(parent GraphElement, graph []GraphElement, graphType string) templ.Co
 	})
 }
 
-func SubGraph(graph []GraphElement, subGraphType string, id int64) templ.Component {
+func SubGraph(graph []GraphElement, subGraphType string, id int64, identifier string) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -144,9 +144,9 @@ func SubGraph(graph []GraphElement, subGraphType string, id int64) templ.Compone
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var8 string
-			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("#%s", subGraphId(subGraphType, child.Id)))
+			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("#%s", subGraphId(subGraphType, child.Id, identifier)))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/graph.templ`, Line: 57, Col: 71}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/graph.templ`, Line: 57, Col: 83}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 			if templ_7745c5c3_Err != nil {
@@ -170,9 +170,9 @@ func SubGraph(graph []GraphElement, subGraphType string, id int64) templ.Compone
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var10 string
-			templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(subGraphId(subGraphType, child.Id))
+			templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(subGraphId(subGraphType, child.Id, identifier))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/graph.templ`, Line: 63, Col: 93}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/graph.templ`, Line: 63, Col: 105}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 			if templ_7745c5c3_Err != nil {

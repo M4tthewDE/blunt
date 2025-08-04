@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/a-h/templ"
+	"github.com/google/uuid"
 	"github.com/m4tthewde/blunt/components"
 	"github.com/m4tthewde/blunt/tmdb"
 	"gopkg.in/yaml.v3"
@@ -196,7 +197,7 @@ func castMemberGraph(w http.ResponseWriter, r *http.Request) {
 		ImagePath: tmdb.BuildPosterPath(person.ProfilePath),
 	}
 
-	components.Graph(parent, children, "person").Render(r.Context(), w)
+	components.Graph(parent, children, "person", uuid.New().String()).Render(r.Context(), w)
 }
 
 func movieGraph(w http.ResponseWriter, r *http.Request) {
@@ -230,7 +231,7 @@ func movieGraph(w http.ResponseWriter, r *http.Request) {
 		ImagePath: tmdb.BuildPosterPath(movie.PosterPath),
 	}
 
-	components.Graph(parent, children, "movie").Render(r.Context(), w)
+	components.Graph(parent, children, "movie", uuid.New().String()).Render(r.Context(), w)
 }
 
 func subGraphMovie(w http.ResponseWriter, r *http.Request) {
@@ -253,7 +254,7 @@ func subGraphMovie(w http.ResponseWriter, r *http.Request) {
 		children = append(children, graphElement)
 	}
 
-	components.SubGraph(children, "person", credits.Id).Render(r.Context(), w)
+	components.SubGraph(children, "person", credits.Id, uuid.New().String()).Render(r.Context(), w)
 }
 
 func subGraphPerson(w http.ResponseWriter, r *http.Request) {
@@ -282,5 +283,5 @@ func subGraphPerson(w http.ResponseWriter, r *http.Request) {
 		children = append(children, graphElement)
 	}
 
-	components.SubGraph(children, "movie", credits.Id).Render(r.Context(), w)
+	components.SubGraph(children, "movie", credits.Id, uuid.New().String()).Render(r.Context(), w)
 }
