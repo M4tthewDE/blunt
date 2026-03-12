@@ -5,11 +5,11 @@ import (
 	"fmt"
 )
 
-func castMemberHref(id int64) string {
-	return fmt.Sprintf("/castMember/%d", id)
+func personHref(id int64) string {
+	return fmt.Sprintf("/person/%d", id)
 }
 
-templ Movie(movieDetails tmdb.MovieDetailsResponse, cast []tmdb.MovieCastMember) {
+templ Movie(movieDetails tmdb.MovieDetailsResponse, credits tmdb.MovieCreditsResponse) {
 	<html>
 		<h1 style="margin-top: 0px; text-align: center;">{ movieDetails.OriginalTitle }</h1>
 		<div style="display: grid; align-items: start; justify-content: start; margin: auto; width: 50%;">
@@ -36,16 +36,27 @@ templ Movie(movieDetails tmdb.MovieDetailsResponse, cast []tmdb.MovieCastMember)
 		</div>
 		<h1 style="text-align: center;">Cast</h1>
 		<style>
-			.cast-member:hover {
+			.person:hover {
 				background-color: #e6f3ff;
 			}
 		</style>
 		<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
-			for _, castMember := range cast {
-				<a href={ castMemberHref(castMember.Id) } class="cast-member" style="display: grid; justify-items: center; text-decoration: none; color: inherit;">
+			for _, castMember := range credits.Cast {
+				<a href={ personHref(castMember.Id) } class="person" style="display: grid; justify-items: center; text-decoration: none; color: inherit;">
 					<img src={ tmdb.BuildPosterPath(castMember.ProfilePath) } width="120" height="180" style="padding-right: 10px;">
 					<span style="text-align: center;">{ castMember.Name }</span>
 					<span style="color: grey; text-align: center;">{ castMember.Character }</span>
+				</a>
+			}		
+		</div>
+		<hr>
+		<h1 style="text-align: center;">Crew</h1>
+		<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
+			for _, crewMember := range credits.Crew {
+				<a href={ personHref(crewMember.Id) } class="person" style="display: grid; justify-items: center; text-decoration: none; color: inherit;">
+					<img src={ tmdb.BuildPosterPath(crewMember.ProfilePath) } width="120" height="180" style="padding-right: 10px;">
+					<span style="text-align: center;">{ crewMember.Name }</span>
+					<span style="color: grey; text-align: center;">{ crewMember.Job }</span>
 				</a>
 			}		
 		</div>

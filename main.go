@@ -36,8 +36,8 @@ func main() {
 	http.Handle("/", templ.Handler(components.Index()))
 	http.HandleFunc("/search", search)
 	http.HandleFunc("GET /movie/{id}", movie)
-	http.HandleFunc("GET /castMember/{id}", castMember)
-	http.HandleFunc("GET /castMember/{id}/graph", castMemberGraph)
+	http.HandleFunc("GET /person/{id}", person)
+	http.HandleFunc("GET /person/{id}/graph", personGraph)
 	http.HandleFunc("GET /movie/{id}/graph", movieGraph)
 	http.HandleFunc("POST /subGraph/movie/{id}", subGraphMovie)
 	http.HandleFunc("POST /subGraph/person/{id}", subGraphPerson)
@@ -81,7 +81,7 @@ func search(w http.ResponseWriter, r *http.Request) {
 
 	for _, peopleResult := range peopleResponse.Results {
 		searchResults = append(searchResults, components.SearchResult{
-			Href:       fmt.Sprintf("/castMember/%d", peopleResult.Id),
+			Href:       fmt.Sprintf("/person/%d", peopleResult.Id),
 			ImagePath:  tmdb.BuildPosterPath(peopleResult.ProfilePath),
 			Name:       peopleResult.Name,
 			Year:       "",
@@ -113,10 +113,10 @@ func movie(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	components.Movie(*movieDetails, credits.Cast).Render(r.Context(), w)
+	components.Movie(*movieDetails, *credits).Render(r.Context(), w)
 }
 
-func castMember(w http.ResponseWriter, r *http.Request) {
+func person(w http.ResponseWriter, r *http.Request) {
 	idString := r.PathValue("id")
 
 	people, err := tmdb.People(r.Context(), config.Token, idString)
@@ -157,10 +157,10 @@ func castMember(w http.ResponseWriter, r *http.Request) {
 		},
 	)
 
-	components.CastMember(*people, cast).Render(r.Context(), w)
+	components.Person(*people, cast).Render(r.Context(), w)
 }
 
-func castMemberGraph(w http.ResponseWriter, r *http.Request) {
+func personGraph(w http.ResponseWriter, r *http.Request) {
 	idString := r.PathValue("id")
 
 	person, err := tmdb.People(r.Context(), config.Token, idString)

@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-templ CastMember(peopleResponse tmdb.PeopleResponse, credits []tmdb.PeopleCredit) {
+templ Person(peopleResponse tmdb.PeopleResponse, credits []tmdb.PeopleCredit) {
 	<html>
 		<h1 style="margin-top: 0px; text-align: center;">{ peopleResponse.Name }</h1>
 		<div style="display: grid; align-items: start; justify-content: start; margin: auto; width: 50%;">
@@ -34,7 +34,7 @@ templ CastMember(peopleResponse tmdb.PeopleResponse, credits []tmdb.PeopleCredit
 					}
 				</div>
 				<hr>
-				<a href={ fmt.Sprintf("/castMember/%d/graph", peopleResponse.Id) }>
+				<a href={ fmt.Sprintf("/person/%d/graph", peopleResponse.Id) }>
 					<button>Graph</button>
 				</a>
 			</div>

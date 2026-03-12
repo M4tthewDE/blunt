@@ -13,7 +13,7 @@ import (
 	"github.com/m4tthewde/blunt/tmdb"
 )
 
-func CastMember(peopleResponse tmdb.PeopleResponse, credits []tmdb.PeopleCredit) templ.Component {
+func Person(peopleResponse tmdb.PeopleResponse, credits []tmdb.PeopleCredit) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -164,9 +164,9 @@ func CastMember(peopleResponse tmdb.PeopleResponse, credits []tmdb.PeopleCredit)
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var9 templ.SafeURL
-		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinURLErrs(fmt.Sprintf("/castMember/%d/graph", peopleResponse.Id))
+		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinURLErrs(fmt.Sprintf("/person/%d/graph", peopleResponse.Id))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/cast_member.templ`, Line: 37, Col: 68}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/cast_member.templ`, Line: 37, Col: 64}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 		if templ_7745c5c3_Err != nil {

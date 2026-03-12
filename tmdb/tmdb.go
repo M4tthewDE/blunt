@@ -47,6 +47,7 @@ type MovieDetailsResponse struct {
 
 type MovieCreditsResponse struct {
 	Cast []MovieCastMember `json:"cast"`
+	Crew []MovieCrewMember `json:"crew"`
 	Id   int64             `json:"id"`
 }
 
@@ -54,6 +55,14 @@ type MovieCastMember struct {
 	Id          int64   `json:"id"`
 	Name        string  `json:"name"`
 	Character   string  `json:"character"`
+	ProfilePath string  `json:"profile_path"`
+	Popularity  float64 `json:"popularity"`
+}
+
+type MovieCrewMember struct {
+	Id          int64   `json:"id"`
+	Name        string  `json:"name"`
+	Job         string  `json:"job"`
 	ProfilePath string  `json:"profile_path"`
 	Popularity  float64 `json:"popularity"`
 }
