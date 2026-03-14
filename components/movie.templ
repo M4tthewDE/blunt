@@ -69,7 +69,7 @@ templ MovieCast(cast []tmdb.MovieCastMember) {
 	</style>
 	<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
 		for _, castMember := range cast {
-			<a href={ personHref(castMember.Id) } class="person" style="display: grid; justify-items: center; text-decoration: none; color: inherit;">
+			<a href={ personHref(castMember.Id) } class="person" style="display: grid; justify-items: center; text-decoration: none; color: inherit; align-content: start;">
 				<img src={ tmdb.BuildPosterPath(castMember.ProfilePath) } width="120" height="180" style="padding-right: 10px;">
 				<span style="text-align: center;">{ castMember.Name }</span>
 				<span style="color: grey; text-align: center;">{ castMember.Character }</span>
@@ -82,7 +82,7 @@ templ MovieCrew(crew []MovieCrewMember) {
 	<h1 style="text-align: center;">Crew</h1>
 	<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
 		for _, crewMember := range crew {
-			<a href={ personHref(crewMember.Id) } class="person" style="display: grid; justify-items: center; text-decoration: none; color: inherit;">
+			<a href={ personHref(crewMember.Id) } class="person" style="display: grid; justify-items: center; text-decoration: none; color: inherit; align-content: start;">
 				<img src={ tmdb.BuildPosterPath(crewMember.ProfilePath) } width="120" height="180" style="padding-right: 10px;">
 				<span style="text-align: center;">{ crewMember.Name }</span>
 				<span style="color: grey; text-align: center;">

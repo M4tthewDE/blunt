@@ -303,7 +303,7 @@ func CastCredits(castCredits []tmdb.CastCredit) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 26, "\" class=\"credit\" style=\"display: grid; justify-items: center; text-decoration: none; color: inherit;\"><img src=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 26, "\" class=\"credit\" style=\"display: grid; justify-items: center; text-decoration: none; color: inherit; align-content: start;\"><img src=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -420,7 +420,7 @@ func CrewCredits(crewCredits []CrewCredit) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 35, "\" class=\"credit\" style=\"display: grid; justify-items: center; text-decoration: none; color: inherit;\"><img src=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 35, "\" class=\"credit\" style=\"display: grid; justify-items: center; text-decoration: none; color: inherit; align-content: start;\"><img src=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

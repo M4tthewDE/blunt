@@ -293,7 +293,7 @@ func MovieCast(cast []tmdb.MovieCastMember) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 20, "\" class=\"person\" style=\"display: grid; justify-items: center; text-decoration: none; color: inherit;\"><img src=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 20, "\" class=\"person\" style=\"display: grid; justify-items: center; text-decoration: none; color: inherit; align-content: start;\"><img src=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -384,7 +384,7 @@ func MovieCrew(crew []MovieCrewMember) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 27, "\" class=\"person\" style=\"display: grid; justify-items: center; text-decoration: none; color: inherit;\"><img src=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 27, "\" class=\"person\" style=\"display: grid; justify-items: center; text-decoration: none; color: inherit; align-content: start;\"><img src=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

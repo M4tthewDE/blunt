@@ -73,7 +73,7 @@ templ CastCredits(castCredits []tmdb.CastCredit) {
 	<h1 style="text-align: center;">Cast Credits({ len(castCredits) })</h1>
 	<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
 		for _, credit := range castCredits {
-			<a href={ fmt.Sprintf("/movie/%d", credit.Id) } class="credit" style="display: grid; justify-items: center; text-decoration: none; color: inherit;">
+			<a href={ fmt.Sprintf("/movie/%d", credit.Id) } class="credit" style="display: grid; justify-items: center; text-decoration: none; color: inherit; align-content: start;">
 				<img src={ tmdb.BuildPosterPath(credit.PosterPath) } width="120" height="180" style="padding-right: 10px;">
 				<span style="text-align: center;">{ credit.OriginalTitle }</span>
 				<span style="text-align: center; color: grey;">{ credit.Character }</span>
@@ -87,7 +87,7 @@ templ CrewCredits(crewCredits []CrewCredit) {
 	<h1 style="text-align: center;">Crew Credits({ len(crewCredits) })</h1>
 	<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
 		for _, credit := range crewCredits {
-			<a href={ fmt.Sprintf("/movie/%d", credit.Id) } class="credit" style="display: grid; justify-items: center; text-decoration: none; color: inherit;">
+			<a href={ fmt.Sprintf("/movie/%d", credit.Id) } class="credit" style="display: grid; justify-items: center; text-decoration: none; color: inherit; align-content: start;">
 				<img src={ tmdb.BuildPosterPath(credit.PosterPath) } width="120" height="180" style="padding-right: 10px;">
 				<span style="text-align: center;">{ credit.OriginalTitle }</span>
 				<span style="color: grey; text-align: center;">
