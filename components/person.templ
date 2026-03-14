@@ -31,7 +31,7 @@ templ Person(peopleResponse tmdb.PeopleResponse, castCredits []tmdb.CastCredit, 
 					}
 					if peopleResponse.Homepage != "" {
 						<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Homepage:</span>
-						<span style="grid-column-start: 2;">{ peopleResponse.Homepage }</span>
+						<a style="grid-column-start: 2;" href={ peopleResponse.Homepage } target="_blank">{ peopleResponse.Homepage }</a>
 					}
 				</div>
 				<details>
