@@ -12,60 +12,72 @@ func personHref(id int64) string {
 templ Movie(movieDetails tmdb.MovieDetailsResponse, credits tmdb.MovieCreditsResponse) {
 	<html>
 		@Home()
-		<h1 style="margin-top: 0px; text-align: center;">{ movieDetails.OriginalTitle }</h1>
-		<div style="display: grid; align-items: start; justify-content: start; margin: auto; width: 50%;">
-			<img src={ tmdb.BuildPosterPath(movieDetails.PosterPath) } width="180" height="270" style="grid-column-start: 1; padding-right: 10px;">
-			<div style="grid-column-start: 2;">
-				<div style="display: grid; align-items: start; justify-content: start;">
-					<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Date:</span>
-					<span style="grid-column-start: 2;">{ movieDetails.ReleaseDate }</span>
-					<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Tagline:</span>
-					<span style="grid-column-start: 2;">{ movieDetails.Tagline }</span>
-					<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Runtime:</span>
-					<span style="grid-column-start: 2;">{ movieDetails.Runtime }min</span>
-					<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Language:</span>
-					<span style="grid-column-start: 2;">{ movieDetails.OriginalLanguage }</span>
-					<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Genres:</span>
-					<div style="grid-column-start: 2;">
-						for i, genre := range movieDetails.Genres {
-							if i != len(movieDetails.Genres) - 1 {
-								<span>{genre.Name}, </span>
-							} else {
-								<span>{genre.Name}</span>
-							}
-						}
-					</div>
-					<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Revenue:</span>
-					<span style="grid-column-start: 2;">{ movieDetails.Revenue }</span>
-				</div>
-				<p>{ movieDetails.Overview }</p>
-			</div>
-		</div>
-		<h1 style="text-align: center;">Cast</h1>
-		<style>
-			.person:hover {
-				background-color: #e6f3ff;
-			}
-		</style>
-		<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
-			for _, castMember := range credits.Cast {
-				<a href={ personHref(castMember.Id) } class="person" style="display: grid; justify-items: center; text-decoration: none; color: inherit;">
-					<img src={ tmdb.BuildPosterPath(castMember.ProfilePath) } width="120" height="180" style="padding-right: 10px;">
-					<span style="text-align: center;">{ castMember.Name }</span>
-					<span style="color: grey; text-align: center;">{ castMember.Character }</span>
-				</a>
-			}		
-		</div>
+		@MovieDetails(movieDetails)
+		@MovieCast(credits.Cast)
 		<hr>
-		<h1 style="text-align: center;">Crew</h1>
-		<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
-			for _, crewMember := range credits.Crew {
-				<a href={ personHref(crewMember.Id) } class="person" style="display: grid; justify-items: center; text-decoration: none; color: inherit;">
-					<img src={ tmdb.BuildPosterPath(crewMember.ProfilePath) } width="120" height="180" style="padding-right: 10px;">
-					<span style="text-align: center;">{ crewMember.Name }</span>
-					<span style="color: grey; text-align: center;">{ crewMember.Job }</span>
-				</a>
-			}		
-		</div>
+		@MovieCrew(credits.Crew)
 	</html>
+}
+
+templ MovieDetails(movieDetails tmdb.MovieDetailsResponse) {
+	<h1 style="margin-top: 0px; text-align: center;">{ movieDetails.OriginalTitle }</h1>
+	<div style="display: grid; align-items: start; justify-content: start; margin: auto; width: 50%;">
+		<img src={ tmdb.BuildPosterPath(movieDetails.PosterPath) } width="180" height="270" style="grid-column-start: 1; padding-right: 10px;">
+		<div style="grid-column-start: 2;">
+			<div style="display: grid; align-items: start; justify-content: start;">
+				<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Date:</span>
+				<span style="grid-column-start: 2;">{ movieDetails.ReleaseDate }</span>
+				<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Tagline:</span>
+				<span style="grid-column-start: 2;">{ movieDetails.Tagline }</span>
+				<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Runtime:</span>
+				<span style="grid-column-start: 2;">{ movieDetails.Runtime }min</span>
+				<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Language:</span>
+				<span style="grid-column-start: 2;">{ movieDetails.OriginalLanguage }</span>
+				<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Genres:</span>
+				<div style="grid-column-start: 2;">
+					for i, genre := range movieDetails.Genres {
+						if i != len(movieDetails.Genres) - 1 {
+							<span>{genre.Name}, </span>
+						} else {
+							<span>{genre.Name}</span>
+						}
+					}
+				</div>
+				<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Revenue:</span>
+				<span style="grid-column-start: 2;">{ movieDetails.Revenue }</span>
+			</div>
+			<p>{ movieDetails.Overview }</p>
+		</div>
+	</div>
+}
+
+templ MovieCast(cast []tmdb.MovieCastMember) {
+	<h1 style="text-align: center;">Cast</h1>
+	<style>
+		.person:hover {
+			background-color: #e6f3ff;
+		}
+	</style>
+	<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
+		for _, castMember := range cast {
+			<a href={ personHref(castMember.Id) } class="person" style="display: grid; justify-items: center; text-decoration: none; color: inherit;">
+				<img src={ tmdb.BuildPosterPath(castMember.ProfilePath) } width="120" height="180" style="padding-right: 10px;">
+				<span style="text-align: center;">{ castMember.Name }</span>
+				<span style="color: grey; text-align: center;">{ castMember.Character }</span>
+			</a>
+		}		
+	</div>
+}
+
+templ MovieCrew(crew []tmdb.MovieCrewMember) {
+	<h1 style="text-align: center;">Crew</h1>
+	<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
+		for _, crewMember := range crew {
+			<a href={ personHref(crewMember.Id) } class="person" style="display: grid; justify-items: center; text-decoration: none; color: inherit;">
+				<img src={ tmdb.BuildPosterPath(crewMember.ProfilePath) } width="120" height="180" style="padding-right: 10px;">
+				<span style="text-align: center;">{ crewMember.Name }</span>
+				<span style="color: grey; text-align: center;">{ crewMember.Job }</span>
+			</a>
+		}		
+	</div>
 }
