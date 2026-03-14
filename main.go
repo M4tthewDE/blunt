@@ -23,7 +23,8 @@ type Config struct {
 var config Config
 
 func main() {
-	data, err := os.ReadFile("config.yaml")
+	configPath := os.Args[1]
+	data, err := os.ReadFile(configPath)
 	if err != nil {
 		log.Fatalln(err)
 	}
