@@ -25,8 +25,18 @@ templ Movie(movieDetails tmdb.MovieDetailsResponse, credits tmdb.MovieCreditsRes
 					<span style="grid-column-start: 2;">{ movieDetails.Runtime }min</span>
 					<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Language:</span>
 					<span style="grid-column-start: 2;">{ movieDetails.OriginalLanguage }</span>
+					<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Genres:</span>
+					<div style="grid-column-start: 2;">
+						for i, genre := range movieDetails.Genres {
+							if i != len(movieDetails.Genres) - 1 {
+								<span>{genre.Name}, </span>
+							} else {
+								<span>{genre.Name}</span>
+							}
+						}
+					</div>
 					<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Revenue:</span>
-					<span style="grid-column-start: 2;">${ movieDetails.Revenue }</span>
+					<span style="grid-column-start: 2;">{ movieDetails.Revenue }</span>
 				</div>
 				<p>{ movieDetails.Overview }</p>
 			</div>

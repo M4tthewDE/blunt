@@ -43,6 +43,12 @@ type MovieDetailsResponse struct {
 	OriginalLanguage string  `json:"original_language"`
 	Overview         string  `json:"overview"`
 	Revenue          int64   `json:"revenue"`
+	Genres           []Genre `json:"genres"`
+}
+
+type Genre struct {
+	Id   int64  `json:"id"`
+	Name string `json:"name"`
 }
 
 type MovieCreditsResponse struct {
