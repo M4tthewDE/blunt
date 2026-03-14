@@ -59,9 +59,11 @@ templ Person(peopleResponse tmdb.PeopleResponse, castCredits []tmdb.CastCredit, 
 
 		if peopleResponse.KnownForDepartment == "Acting" {
 			@CastCredits(castCredits)
+			<hr>
 			@CrewCredits(crewCredits)
 		} else {
 			@CrewCredits(crewCredits)
+			<hr>
 			@CastCredits(castCredits)
 		}
 	</html>
