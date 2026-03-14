@@ -5,7 +5,7 @@ import _ "embed"
 //go:embed static/tmdb_primary_long_blue.svg
 var tmdbLogo string
 
-templ About() {
+templ About(commitHash string, buildTime string) {
     <html>
         <div>
             <div style="width: 20em; height: 1em; margin-bottom: 1em;">
@@ -14,6 +14,10 @@ templ About() {
             This product uses the TMDB API but is not endorsed or certified by TMDB.
             <hr>
             <a target="_blank" href="https://github.com/m4tthewDE/blunt">Source</a>
+            <br>
+            <label>Commit: { commitHash }</label>
+            <br>
+            <label>Time (UTC): { buildTime }</label>
         </div>
     </html>
 }

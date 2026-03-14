@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"runtime/debug"
 	"slices"
 	"time"
 
@@ -96,7 +97,26 @@ func search(w http.ResponseWriter, r *http.Request) {
 }
 
 func about(w http.ResponseWriter, r *http.Request) {
-	components.About().Render(r.Context(), w)
+	info, ok := debug.ReadBuildInfo()
+	if !ok {
+		log.Println("no build information available")
+		w.WriteHeader(500)
+		return
+	}
+
+	var commitHash string
+	var buildTime string
+	for _, setting := range info.Settings {
+		if setting.Key == "vcs.revision" {
+			commitHash = setting.Value
+		}
+
+		if setting.Key == "vcs.time" {
+			buildTime = setting.Value
+		}
+	}
+
+	components.About(commitHash, buildTime).Render(r.Context(), w)
 }
 
 func movie(w http.ResponseWriter, r *http.Request) {
