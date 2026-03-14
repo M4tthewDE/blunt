@@ -28,6 +28,5 @@ jobs:
           name: Nightly Release
           body: "Automated build from commit ${{ github.sha }} on ${{ github.ref_name }}"
           artifacts: dist/*
-          replaceArtifacts: true
           allowUpdates: true
           artifactErrorsFailBuild: true
