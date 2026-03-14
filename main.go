@@ -10,7 +10,6 @@ import (
 	"time"
 
 	"github.com/a-h/templ"
-	"github.com/google/uuid"
 	"github.com/m4tthewde/blunt/components"
 	"github.com/m4tthewde/blunt/tmdb"
 	"gopkg.in/yaml.v3"
@@ -39,10 +38,6 @@ func main() {
 	http.HandleFunc("GET /about", about)
 	http.HandleFunc("GET /movie/{id}", movie)
 	http.HandleFunc("GET /person/{id}", person)
-	http.HandleFunc("GET /person/{id}/graph", personGraph)
-	http.HandleFunc("GET /movie/{id}/graph", movieGraph)
-	http.HandleFunc("POST /subGraph/movie/{id}", subGraphMovie)
-	http.HandleFunc("POST /subGraph/person/{id}", subGraphPerson)
 
 	log.Println("Starting server on port 8080")
 	http.ListenAndServe(":8080", nil)
@@ -194,130 +189,4 @@ func person(w http.ResponseWriter, r *http.Request) {
 	)
 
 	components.Person(*people, cast, crew).Render(r.Context(), w)
-}
-
-func personGraph(w http.ResponseWriter, r *http.Request) {
-	idString := r.PathValue("id")
-
-	person, err := tmdb.People(r.Context(), config.Token, idString)
-	if err != nil {
-		w.WriteHeader(500)
-		return
-	}
-
-	credits, err := tmdb.PeopleCredits(r.Context(), config.Token, idString)
-	if err != nil {
-		w.WriteHeader(500)
-		return
-	}
-
-	slices.SortFunc(credits.Cast,
-		func(a, b tmdb.CastCredit) int {
-			return cmp.Compare(b.Popularity, a.Popularity)
-		},
-	)
-
-	children := make([]components.GraphElement, 0)
-
-	for _, credit := range credits.Cast[0:5] {
-		graphElement := components.GraphElement{
-			Id:        credit.Id,
-			ImagePath: tmdb.BuildPosterPath(credit.PosterPath),
-		}
-
-		children = append(children, graphElement)
-	}
-
-	parent := components.GraphElement{
-		Id:        person.Id,
-		ImagePath: tmdb.BuildPosterPath(person.ProfilePath),
-	}
-
-	components.Graph(parent, children, "person", uuid.New().String()).Render(r.Context(), w)
-}
-
-func movieGraph(w http.ResponseWriter, r *http.Request) {
-	idString := r.PathValue("id")
-
-	movie, err := tmdb.MovieDetails(r.Context(), config.Token, idString)
-	if err != nil {
-		w.WriteHeader(500)
-		return
-	}
-
-	credits, err := tmdb.Credits(r.Context(), config.Token, idString)
-	if err != nil {
-		w.WriteHeader(500)
-		return
-	}
-
-	children := make([]components.GraphElement, 0)
-
-	for _, credit := range credits.Cast[0:5] {
-		graphElement := components.GraphElement{
-			Id:        credit.Id,
-			ImagePath: tmdb.BuildPosterPath(credit.ProfilePath),
-		}
-
-		children = append(children, graphElement)
-	}
-
-	parent := components.GraphElement{
-		Id:        movie.Id,
-		ImagePath: tmdb.BuildPosterPath(movie.PosterPath),
-	}
-
-	components.Graph(parent, children, "movie", uuid.New().String()).Render(r.Context(), w)
-}
-
-func subGraphMovie(w http.ResponseWriter, r *http.Request) {
-	id := r.PathValue("id")
-
-	credits, err := tmdb.Credits(r.Context(), config.Token, id)
-	if err != nil {
-		w.WriteHeader(500)
-		return
-	}
-
-	children := make([]components.GraphElement, 0)
-
-	for _, credit := range credits.Cast[:5] {
-		graphElement := components.GraphElement{
-			Id:        credit.Id,
-			ImagePath: tmdb.BuildPosterPath(credit.ProfilePath),
-		}
-
-		children = append(children, graphElement)
-	}
-
-	components.SubGraph(children, "person", credits.Id, uuid.New().String()).Render(r.Context(), w)
-}
-
-func subGraphPerson(w http.ResponseWriter, r *http.Request) {
-	id := r.PathValue("id")
-
-	credits, err := tmdb.PeopleCredits(r.Context(), config.Token, id)
-	if err != nil {
-		w.WriteHeader(500)
-		return
-	}
-
-	slices.SortFunc(credits.Cast,
-		func(a, b tmdb.CastCredit) int {
-			return cmp.Compare(b.Popularity, a.Popularity)
-		},
-	)
-
-	children := make([]components.GraphElement, 0)
-
-	for _, credit := range credits.Cast[:5] {
-		graphElement := components.GraphElement{
-			Id:        credit.Id,
-			ImagePath: tmdb.BuildPosterPath(credit.PosterPath),
-		}
-
-		children = append(children, graphElement)
-	}
-
-	components.SubGraph(children, "movie", credits.Id, uuid.New().String()).Render(r.Context(), w)
 }
