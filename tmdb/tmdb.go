@@ -80,16 +80,27 @@ type PeopleResponse struct {
 }
 
 type PeopleCreditsResponse struct {
-	Cast []PeopleCredit `json:"cast"`
-	Id   int64          `json:"id"`
+	Cast []CastCredit `json:"cast"`
+	Crew []CrewCredit `json:"crew"`
+	Id   int64        `json:"id"`
 }
 
-type PeopleCredit struct {
+type CastCredit struct {
 	Id            int64   `json:"id"`
 	OriginalTitle string  `json:"original_title"`
 	PosterPath    string  `json:"poster_path"`
 	ReleaseDate   string  `json:"release_date"`
 	Popularity    float64 `json:"popularity"`
+	Character     string  `json:"character"`
+}
+
+type CrewCredit struct {
+	Id            int64   `json:"id"`
+	OriginalTitle string  `json:"original_title"`
+	PosterPath    string  `json:"poster_path"`
+	ReleaseDate   string  `json:"release_date"`
+	Popularity    float64 `json:"popularity"`
+	Job           string  `json:"job"`
 }
 
 func SearchMovies(ctx context.Context, token string, search string) (*MovieSearchResponse, error) {

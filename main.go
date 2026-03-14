@@ -141,15 +141,22 @@ func person(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	cast := make([]tmdb.PeopleCredit, 0)
+	cast := make([]tmdb.CastCredit, 0)
 	for _, c := range peopleCredits.Cast {
 		if c.ReleaseDate != "" {
 			cast = append(cast, c)
 		}
 	}
 
+	crew := make([]tmdb.CrewCredit, 0)
+	for _, c := range peopleCredits.Crew {
+		if c.ReleaseDate != "" {
+			crew = append(crew, c)
+		}
+	}
+
 	slices.SortFunc(cast,
-		func(a, b tmdb.PeopleCredit) int {
+		func(a, b tmdb.CastCredit) int {
 			timeA, err := time.Parse(time.DateOnly, a.ReleaseDate)
 			if err != nil {
 				return 0
@@ -167,7 +174,26 @@ func person(w http.ResponseWriter, r *http.Request) {
 		},
 	)
 
-	components.Person(*people, cast).Render(r.Context(), w)
+	slices.SortFunc(crew,
+		func(a, b tmdb.CrewCredit) int {
+			timeA, err := time.Parse(time.DateOnly, a.ReleaseDate)
+			if err != nil {
+				return 0
+			}
+			timeB, err := time.Parse(time.DateOnly, b.ReleaseDate)
+			if err != nil {
+				return 0
+			}
+
+			if timeA.Before(timeB) {
+				return 1
+			}
+
+			return -1
+		},
+	)
+
+	components.Person(*people, cast, crew).Render(r.Context(), w)
 }
 
 func personGraph(w http.ResponseWriter, r *http.Request) {
@@ -186,7 +212,7 @@ func personGraph(w http.ResponseWriter, r *http.Request) {
 	}
 
 	slices.SortFunc(credits.Cast,
-		func(a, b tmdb.PeopleCredit) int {
+		func(a, b tmdb.CastCredit) int {
 			return cmp.Compare(b.Popularity, a.Popularity)
 		},
 	)
@@ -277,7 +303,7 @@ func subGraphPerson(w http.ResponseWriter, r *http.Request) {
 	}
 
 	slices.SortFunc(credits.Cast,
-		func(a, b tmdb.PeopleCredit) int {
+		func(a, b tmdb.CastCredit) int {
 			return cmp.Compare(b.Popularity, a.Popularity)
 		},
 	)
