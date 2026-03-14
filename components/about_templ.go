@@ -8,7 +8,12 @@ package components
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-func Index() templ.Component {
+import _ "embed"
+
+//go:embed static/tmdb_primary_long_blue.svg
+var tmdbLogo string
+
+func About() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -29,7 +34,15 @@ func Index() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script src=\"https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js\"></script><html><div style=\"float: right;\"><a href=\"/about\">About</a></div><div style=\"margin: auto; width: 50%; justify-items: center; padding-bottom: 1rem;\"><h1 style=\"text-align: center;\">Movie Explorer</h1><input type=\"search\" name=\"search\" autofocus placeholder=\"Search Movies/People...\" hx-post=\"/search\" hx-trigger=\"input changed delay:500ms\" hx-target=\"#search-results\" style=\"margin: auto; display: block;\"></div><div id=\"search-results\"></div></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<html><div><div style=\"width: 20em; height: 1em; margin-bottom: 1em;\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templ.Raw(tmdbLogo).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div>This product uses the TMDB API but is not endorsed or certified by TMDB.</div></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

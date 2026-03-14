@@ -36,6 +36,7 @@ func main() {
 
 	http.Handle("/", templ.Handler(components.Index()))
 	http.HandleFunc("/search", search)
+	http.HandleFunc("GET /about", about)
 	http.HandleFunc("GET /movie/{id}", movie)
 	http.HandleFunc("GET /person/{id}", person)
 	http.HandleFunc("GET /person/{id}/graph", personGraph)
@@ -97,6 +98,10 @@ func search(w http.ResponseWriter, r *http.Request) {
 	)
 
 	components.Search(searchResults).Render(r.Context(), w)
+}
+
+func about(w http.ResponseWriter, r *http.Request) {
+	components.About().Render(r.Context(), w)
 }
 
 func movie(w http.ResponseWriter, r *http.Request) {

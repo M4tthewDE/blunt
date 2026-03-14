@@ -1,0 +1,17 @@
+package components
+
+import _ "embed"
+
+//go:embed static/tmdb_primary_long_blue.svg
+var tmdbLogo string
+
+templ About() {
+    <html>
+        <div>
+            <div style="width: 20em; height: 1em; margin-bottom: 1em;">
+                @templ.Raw(tmdbLogo)
+            </div>
+            This product uses the TMDB API but is not endorsed or certified by TMDB.
+        </div>
+    </html>
+}
