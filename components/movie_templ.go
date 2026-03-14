@@ -220,14 +220,14 @@ func MovieDetails(movieDetails tmdb.MovieDetailsResponse) templ.Component {
 				}
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "</div><span style=\"grid-column-start: 1; padding-right: 5px; font-weight: bold;\">Revenue:</span> <span style=\"grid-column-start: 2;\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "</div><span style=\"grid-column-start: 1; padding-right: 5px; font-weight: bold;\">Revenue:</span> <span style=\"grid-column-start: 2;\">$")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var11 string
 		templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(movieDetails.Revenue)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/movie.templ`, Line: 56, Col: 62}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/movie.templ`, Line: 56, Col: 63}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
 		if templ_7745c5c3_Err != nil {
