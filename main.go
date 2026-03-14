@@ -163,11 +163,31 @@ func person(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	crew := make([]tmdb.CrewCredit, 0)
+	crewMap := make(map[int64]*components.CrewCredit)
 	for _, c := range peopleCredits.Crew {
-		if c.ReleaseDate != "" {
-			crew = append(crew, c)
+		if c.ReleaseDate == "" {
+			continue
 		}
+
+		if existing, ok := crewMap[c.Id]; ok {
+			if !slices.Contains(existing.Jobs, c.Job) {
+				existing.Jobs = append(existing.Jobs, c.Job)
+			}
+		} else {
+			crewMap[c.Id] = &components.CrewCredit{
+				Id:            c.Id,
+				OriginalTitle: c.OriginalTitle,
+				PosterPath:    c.PosterPath,
+				ReleaseDate:   c.ReleaseDate,
+				Popularity:    c.Popularity,
+				Jobs:          []string{c.Job},
+			}
+		}
+	}
+
+	crew := make([]components.CrewCredit, 0, len(crewMap))
+	for _, c := range crewMap {
+		crew = append(crew, *c)
 	}
 
 	slices.SortFunc(cast,
@@ -190,7 +210,7 @@ func person(w http.ResponseWriter, r *http.Request) {
 	)
 
 	slices.SortFunc(crew,
-		func(a, b tmdb.CrewCredit) int {
+		func(a, b components.CrewCredit) int {
 			timeA, err := time.Parse(time.DateOnly, a.ReleaseDate)
 			if err != nil {
 				return 0
