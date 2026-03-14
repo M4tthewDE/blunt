@@ -119,6 +119,10 @@ func movie(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	slices.SortFunc(credits.Crew, func(a, b tmdb.MovieCrewMember) int {
+		return cmp.Compare(b.Popularity, a.Popularity)
+	})
+
 	components.Movie(*movieDetails, *credits).Render(r.Context(), w)
 }
 
