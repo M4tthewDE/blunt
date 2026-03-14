@@ -134,11 +134,32 @@ func movie(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	slices.SortFunc(credits.Crew, func(a, b tmdb.MovieCrewMember) int {
+	crewMap := make(map[int64]*components.MovieCrewMember)
+	for _, c := range credits.Crew {
+		if existing, ok := crewMap[c.Id]; ok {
+			if !slices.Contains(existing.Jobs, c.Job) {
+				existing.Jobs = append(existing.Jobs, c.Job)
+			}
+		} else {
+			crewMap[c.Id] = &components.MovieCrewMember{
+				ProfilePath: c.ProfilePath,
+				Name:        c.Name,
+				Jobs:        []string{c.Job},
+				Popularity:  c.Popularity,
+			}
+		}
+	}
+
+	crew := make([]components.MovieCrewMember, 0, len(crewMap))
+	for _, c := range crewMap {
+		crew = append(crew, *c)
+	}
+
+	slices.SortFunc(crew, func(a, b components.MovieCrewMember) int {
 		return cmp.Compare(b.Popularity, a.Popularity)
 	})
 
-	components.Movie(*movieDetails, *credits).Render(r.Context(), w)
+	components.Movie(*movieDetails, credits.Cast, crew).Render(r.Context(), w)
 }
 
 func person(w http.ResponseWriter, r *http.Request) {

@@ -9,13 +9,22 @@ func personHref(id int64) string {
 	return fmt.Sprintf("/person/%d", id)
 }
 
-templ Movie(movieDetails tmdb.MovieDetailsResponse, credits tmdb.MovieCreditsResponse) {
+type MovieCrewMember struct {
+	Id int64
+	ProfilePath string
+	Name string
+	Jobs []string
+	Popularity float64
+}
+
+
+templ Movie(movieDetails tmdb.MovieDetailsResponse, cast []tmdb.MovieCastMember, crew []MovieCrewMember) {
 	<html>
 		@Home()
 		@MovieDetails(movieDetails)
-		@MovieCast(credits.Cast)
+		@MovieCast(cast)
 		<hr>
-		@MovieCrew(credits.Crew)
+		@MovieCrew(crew)
 	</html>
 }
 
@@ -69,14 +78,22 @@ templ MovieCast(cast []tmdb.MovieCastMember) {
 	</div>
 }
 
-templ MovieCrew(crew []tmdb.MovieCrewMember) {
+templ MovieCrew(crew []MovieCrewMember) {
 	<h1 style="text-align: center;">Crew</h1>
 	<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
 		for _, crewMember := range crew {
 			<a href={ personHref(crewMember.Id) } class="person" style="display: grid; justify-items: center; text-decoration: none; color: inherit;">
 				<img src={ tmdb.BuildPosterPath(crewMember.ProfilePath) } width="120" height="180" style="padding-right: 10px;">
 				<span style="text-align: center;">{ crewMember.Name }</span>
-				<span style="color: grey; text-align: center;">{ crewMember.Job }</span>
+				<span style="color: grey; text-align: center;">
+						for i, job := range crewMember.Jobs {
+							if i != len(crewMember.Jobs) - 1 {
+								{job}, 
+							} else {
+								{job}
+							}
+						}
+				</span>
 			</a>
 		}		
 	</div>
