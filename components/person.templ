@@ -34,6 +34,10 @@ templ Person(peopleResponse tmdb.PeopleResponse, castCredits []tmdb.CastCredit, 
 						<span style="grid-column-start: 2;">{ peopleResponse.Homepage }</span>
 					}
 				</div>
+				<details>
+					<summary>Biography</summary>
+					<p>{ peopleResponse.Biography }</p>
+				</details>
 			</div>
 		</div>
 		<style>
