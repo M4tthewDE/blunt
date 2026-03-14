@@ -142,6 +142,7 @@ func movie(w http.ResponseWriter, r *http.Request) {
 			}
 		} else {
 			crewMap[c.Id] = &components.MovieCrewMember{
+				Id:          c.Id,
 				ProfilePath: c.ProfilePath,
 				Name:        c.Name,
 				Jobs:        []string{c.Job},
