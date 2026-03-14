@@ -44,59 +44,67 @@ func Graph(parent GraphElement, graph []GraphElement, graphType, identifier stri
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script src=\"https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js\"></script><script>\n\t\thtmx.on(\"htmx:beforeRequest\", function(evt) {\n\t\t\tlet target = evt.detail.target;\n\n\t\t\tif (target.children.length != 0) {\n\t\t\t\twhile (target.firstChild) {\n\t\t\t\t\ttarget.removeChild(target.firstChild);\n\t\t\t\t}\n\n\t\t\t\tevt.preventDefault();\n\t\t\t}\n\t\t});\n\t</script><html><div style=\"margin: auto; width: 50%; display: grid; align-items: start; justify-items: center;\"><div style=\"display: flex; justify-content: center; padding-bottom: 1rem;\"><button hx-post=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script src=\"https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js\"></script><script>\n\t\thtmx.on(\"htmx:beforeRequest\", function(evt) {\n\t\t\tlet target = evt.detail.target;\n\n\t\t\tif (target.children.length != 0) {\n\t\t\t\twhile (target.firstChild) {\n\t\t\t\t\ttarget.removeChild(target.firstChild);\n\t\t\t\t}\n\n\t\t\t\tevt.preventDefault();\n\t\t\t}\n\t\t});\n\t</script><html>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = Home().Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div style=\"margin: auto; width: 50%; display: grid; align-items: start; justify-items: center;\"><div style=\"display: flex; justify-content: center; padding-bottom: 1rem;\"><button hx-post=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(subGraphPath(parent, graphType))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/graph.templ`, Line: 37, Col: 46}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/graph.templ`, Line: 38, Col: 46}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "\" hx-trigger=\"click\" hx-target=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\" hx-trigger=\"click\" hx-target=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("#%s", subGraphId(graphType, parent.Id, identifier)))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/graph.templ`, Line: 39, Col: 81}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/graph.templ`, Line: 40, Col: 81}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\" hx-swap=\"innerHTML\"><img src=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\" hx-swap=\"innerHTML\"><img src=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(parent.ImagePath)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/graph.templ`, Line: 42, Col: 32}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/graph.templ`, Line: 43, Col: 32}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\" width=\"90\" height=\"135\"></button></div><div style=\"display: flex; justify-items: center;\" id=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\" width=\"90\" height=\"135\"></button></div><div style=\"display: flex; justify-items: center;\" id=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(subGraphId(graphType, parent.Id, identifier))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/graph.templ`, Line: 45, Col: 103}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/graph.templ`, Line: 46, Col: 103}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\"></div></div></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "\"></div></div></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -126,59 +134,59 @@ func SubGraph(graph []GraphElement, subGraphType string, id int64, identifier st
 		}
 		ctx = templ.ClearChildren(ctx)
 		for _, child := range graph {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<div><div style=\"display: flex; justify-content: center; padding-bottom: 1rem;\"><button hx-post=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<div><div style=\"display: flex; justify-content: center; padding-bottom: 1rem;\"><button hx-post=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var7 string
 			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(subGraphPath(child, subGraphType))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/graph.templ`, Line: 55, Col: 48}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/graph.templ`, Line: 56, Col: 48}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "\" hx-trigger=\"click\" hx-target=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "\" hx-trigger=\"click\" hx-target=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var8 string
 			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("#%s", subGraphId(subGraphType, child.Id, identifier)))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/graph.templ`, Line: 57, Col: 83}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/graph.templ`, Line: 58, Col: 83}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "\" hx-swap=\"innerHTML\"><img src=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "\" hx-swap=\"innerHTML\"><img src=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var9 string
 			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(child.ImagePath)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/graph.templ`, Line: 60, Col: 31}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/graph.templ`, Line: 61, Col: 31}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "\" width=\"90\" height=\"135\"></button></div><div style=\"display: flex; justify-items: center;\" id=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "\" width=\"90\" height=\"135\"></button></div><div style=\"display: flex; justify-items: center;\" id=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var10 string
 			templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(subGraphId(subGraphType, child.Id, identifier))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/graph.templ`, Line: 63, Col: 105}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/graph.templ`, Line: 64, Col: 105}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "\"></div></div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "\"></div></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

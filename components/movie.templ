@@ -11,6 +11,7 @@ func personHref(id int64) string {
 
 templ Movie(movieDetails tmdb.MovieDetailsResponse, credits tmdb.MovieCreditsResponse) {
 	<html>
+		@Home()
 		<h1 style="margin-top: 0px; text-align: center;">{ movieDetails.OriginalTitle }</h1>
 		<div style="display: grid; align-items: start; justify-content: start; margin: auto; width: 50%;">
 			<img src={ tmdb.BuildPosterPath(movieDetails.PosterPath) } width="180" height="270" style="grid-column-start: 1; padding-right: 10px;">
