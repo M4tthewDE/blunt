@@ -34,10 +34,12 @@ templ Person(peopleResponse tmdb.PeopleResponse, castCredits []tmdb.CastCredit, 
 						<a style="grid-column-start: 2;" href={ peopleResponse.Homepage } target="_blank">{ peopleResponse.Homepage }</a>
 					}
 				</div>
-				<details>
-					<summary>Biography</summary>
-					<p>{ peopleResponse.Biography }</p>
-				</details>
+				if peopleResponse.Biography != "" {
+					<details>
+						<summary>Biography</summary>
+						<p>{ peopleResponse.Biography }</p>
+					</details>
+				}
 			</div>
 		</div>
 		<style>
