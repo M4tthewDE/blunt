@@ -8,6 +8,7 @@ import (
 	"os"
 	"runtime/debug"
 	"slices"
+	"strconv"
 	"time"
 
 	"github.com/a-h/templ"
@@ -39,6 +40,7 @@ func main() {
 	http.HandleFunc("GET /about", about)
 	http.HandleFunc("GET /movie/{id}", movie)
 	http.HandleFunc("GET /person/{id}", person)
+	http.HandleFunc("GET /person/{id}/filteredCastCredits", filteredCastCredits)
 
 	log.Println("Starting server on port 8080")
 	http.ListenAndServe(":8080", nil)
@@ -178,9 +180,11 @@ func person(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	castCreditsFilterParameters := createCastCreditsFilterParameters(peopleCredits.Cast)
+
 	cast := make([]tmdb.CastCredit, 0)
 	for _, c := range peopleCredits.Cast {
-		if c.ReleaseDate != "" {
+		if c.ReleaseDate != "" && c.Popularity > castCreditsFilterParameters.Popularity {
 			cast = append(cast, c)
 		}
 	}
@@ -250,5 +254,79 @@ func person(w http.ResponseWriter, r *http.Request) {
 		},
 	)
 
-	components.Person(*people, cast, crew).Render(r.Context(), w)
+	components.Person(*people, cast, crew, castCreditsFilterParameters).Render(r.Context(), w)
+}
+
+func createCastCreditsFilterParameters(castCredits []tmdb.CastCredit) components.CastCreditsFilterParameters {
+	maxPopularity := 0.0
+
+	for _, castCredit := range castCredits {
+		if castCredit.Popularity > maxPopularity {
+			maxPopularity = castCredit.Popularity
+		}
+	}
+
+	minPopularity := maxPopularity
+
+	for _, castCredit := range castCredits {
+		if castCredit.Popularity < minPopularity {
+			minPopularity = castCredit.Popularity
+		}
+	}
+
+	return components.CastCreditsFilterParameters{
+		Popularity:    2.0,
+		MinPopularity: minPopularity,
+		MaxPopularity: maxPopularity,
+	}
+}
+
+func filteredCastCredits(w http.ResponseWriter, r *http.Request) {
+	idString := r.PathValue("id")
+
+	popularity := 0.0
+	popularityParam := r.URL.Query().Get("popularity")
+	if popularityParam != "" {
+		popularityVal, err := strconv.ParseFloat(popularityParam, 64)
+		if err == nil {
+			popularity = popularityVal
+		}
+	}
+
+	peopleCredits, err := tmdb.PeopleCredits(r.Context(), config.Token, idString)
+	if err != nil {
+		w.WriteHeader(500)
+		return
+	}
+
+	filterParams := createCastCreditsFilterParameters(peopleCredits.Cast)
+	filterParams.Popularity = popularity
+
+	cast := make([]tmdb.CastCredit, 0)
+	for _, c := range peopleCredits.Cast {
+		if c.ReleaseDate != "" && c.Popularity >= popularity {
+			cast = append(cast, c)
+		}
+	}
+
+	slices.SortFunc(cast,
+		func(a, b tmdb.CastCredit) int {
+			timeA, err := time.Parse(time.DateOnly, a.ReleaseDate)
+			if err != nil {
+				return 0
+			}
+			timeB, err := time.Parse(time.DateOnly, b.ReleaseDate)
+			if err != nil {
+				return 0
+			}
+
+			if timeA.Before(timeB) {
+				return 1
+			}
+
+			return -1
+		},
+	)
+
+	components.CastCredits(cast, filterParams, idString).Render(r.Context(), w)
 }

@@ -3,6 +3,7 @@ package components
 import (
 	"github.com/m4tthewde/blunt/tmdb"
 	"fmt"
+	"strconv"
 )
 
 type CrewCredit struct {
@@ -14,18 +15,19 @@ type CrewCredit struct {
 	Jobs          []string
 }
 
-templ Person(peopleResponse tmdb.PeopleResponse, castCredits []tmdb.CastCredit, crewCredits []CrewCredit) {
+templ Person(peopleResponse tmdb.PeopleResponse, castCredits []tmdb.CastCredit, crewCredits []CrewCredit, castCreditsFilterParameters CastCreditsFilterParameters) {
+	<script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js"></script>
 	<html>
 		@Home()
 		@PersonDetails(peopleResponse)
 		if peopleResponse.KnownForDepartment == "Acting" {
-			@CastCredits(castCredits)
+			@CastCredits(castCredits, castCreditsFilterParameters, strconv.FormatInt(peopleResponse.Id, 10))
 			<hr>
 			@CrewCredits(crewCredits)
 		} else {
 			@CrewCredits(crewCredits)
 			<hr>
-			@CastCredits(castCredits)
+			@CastCredits(castCredits, castCreditsFilterParameters, strconv.FormatInt(peopleResponse.Id, 10))
 		}
 	</html>
 }
@@ -33,7 +35,7 @@ templ Person(peopleResponse tmdb.PeopleResponse, castCredits []tmdb.CastCredit, 
 templ PersonDetails(peopleResponse tmdb.PeopleResponse) {
 	<h1 style="margin-top: 0px; text-align: center;">{ peopleResponse.Name }</h1>
 	<div style="display: grid; align-items: start; justify-content: start; margin: auto; width: 50%;">
-		<img src={ tmdb.BuildPosterPath(peopleResponse.ProfilePath) } width="180" height="270" style="grid-column-start: 1; padding-right: 10px;">
+		<img src={ tmdb.BuildPosterPath(peopleResponse.ProfilePath) } width="180" height="270" style="grid-column-start: 1; margin-right: 10px;">
 		<div style="grid-column-start: 2;">
 			<div style="display: grid; align-items: start; justify-content: start;">
 				if peopleResponse.Birthday != "" {
@@ -67,23 +69,47 @@ templ PersonDetails(peopleResponse tmdb.PeopleResponse) {
 	</div>
 }
 
-templ CastCredits(castCredits []tmdb.CastCredit) {
-	<style>
-		.castCredit:hover {
-			background-color: #e6f3ff;
-		}
-	</style>
+templ CastCredits(castCredits []tmdb.CastCredit, castCreditsFilterParameters CastCreditsFilterParameters, personId string) {
+	<div id="cast-credits">
+		<style>
+			.castCredit:hover {
+				background-color: #e6f3ff;
+			}
+		</style>
 
-	<h1 style="text-align: center;">Cast Credits({ len(castCredits) })</h1>
-	<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
-		for _, credit := range castCredits {
-			<a href={ fmt.Sprintf("/movie/%d", credit.Id) } class="castCredit" style="display: grid; justify-items: center; text-decoration: none; color: inherit; align-content: start;">
-				<img src={ tmdb.BuildPosterPath(credit.PosterPath) } width="120" height="180" style="padding-right: 10px;">
-				<span style="text-align: center;">{ credit.OriginalTitle }</span>
-				<span style="text-align: center; color: grey;">{ credit.Character }</span>
-				<span style="color: grey">{ tmdb.GetReleaseYear(credit.ReleaseDate) }</span>
-			</a>
-		}		
+		<h1 style="text-align: center;">Cast Credits({ len(castCredits) })</h1>
+		@CastCreditsFilters(castCreditsFilterParameters, personId)
+		<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
+			for _, credit := range castCredits {
+				<a href={ fmt.Sprintf("/movie/%d", credit.Id) } class="castCredit" style="display: grid; justify-items: center; text-decoration: none; color: inherit; align-content: start;">
+					<img src={ tmdb.BuildPosterPath(credit.PosterPath) } width="120" height="180" style="padding-right: 10px;">
+					<span style="text-align: center;">{ credit.OriginalTitle }</span>
+					<span style="text-align: center; color: grey;">{ credit.Character }</span>
+					<span style="color: grey">{ tmdb.GetReleaseYear(credit.ReleaseDate) }</span>
+				</a>
+			}		
+		</div>
+	</div>
+}
+
+type CastCreditsFilterParameters struct {
+	Popularity float64
+	MinPopularity float64
+	MaxPopularity float64
+}
+
+templ CastCreditsFilters(filterParams CastCreditsFilterParameters, personId string) {
+	<div style="display: grid; margin-bottom: 1em">
+		<label for="popularity">Popularity ({filterParams.Popularity})</label>
+		<div style="display: flex;">
+			<input type="range" name="popularity" 
+				min={filterParams.MinPopularity}
+				max={filterParams.MaxPopularity}
+				value={filterParams.Popularity}
+				hx-get={"/person/" + personId + "/filteredCastCredits"}
+				hx-target="#cast-credits"
+			>
+		</div>
 	</div>
 }
 
