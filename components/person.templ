@@ -17,46 +17,7 @@ type CrewCredit struct {
 templ Person(peopleResponse tmdb.PeopleResponse, castCredits []tmdb.CastCredit, crewCredits []CrewCredit) {
 	<html>
 		@Home()
-		<h1 style="margin-top: 0px; text-align: center;">{ peopleResponse.Name }</h1>
-		<div style="display: grid; align-items: start; justify-content: start; margin: auto; width: 50%;">
-			<img src={ tmdb.BuildPosterPath(peopleResponse.ProfilePath) } width="180" height="270" style="grid-column-start: 1; padding-right: 10px;">
-			<div style="grid-column-start: 2;">
-				<div style="display: grid; align-items: start; justify-content: start;">
-					if peopleResponse.Birthday != "" {
-						<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Birthday:</span>
-						<span style="grid-column-start: 2;">{ peopleResponse.Birthday }</span>
-					}
-					if peopleResponse.Deathday != "" {
-						<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Deathday:</span>
-						<span style="grid-column-start: 2;">{ peopleResponse.Deathday }</span>
-					}
-					if peopleResponse.PlaceOfBirth != "" {
-						<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Place of birth:</span>
-						<span style="grid-column-start: 2;">{ peopleResponse.PlaceOfBirth }</span>
-					}
-					if peopleResponse.KnownForDepartment != "" {
-						<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Known for:</span>
-						<span style="grid-column-start: 2;">{ peopleResponse.KnownForDepartment }</span>
-					}
-					if peopleResponse.Homepage != "" {
-						<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Homepage:</span>
-						<a style="grid-column-start: 2;" href={ peopleResponse.Homepage } target="_blank">{ peopleResponse.Homepage }</a>
-					}
-				</div>
-				if peopleResponse.Biography != "" {
-					<details>
-						<summary>Biography</summary>
-						<p>{ peopleResponse.Biography }</p>
-					</details>
-				}
-			</div>
-		</div>
-		<style>
-			.credit:hover {
-				background-color: #e6f3ff;
-			}
-		</style>
-
+		@PersonDetails(peopleResponse)
 		if peopleResponse.KnownForDepartment == "Acting" {
 			@CastCredits(castCredits)
 			<hr>
@@ -69,11 +30,54 @@ templ Person(peopleResponse tmdb.PeopleResponse, castCredits []tmdb.CastCredit, 
 	</html>
 }
 
+templ PersonDetails(peopleResponse tmdb.PeopleResponse) {
+	<h1 style="margin-top: 0px; text-align: center;">{ peopleResponse.Name }</h1>
+	<div style="display: grid; align-items: start; justify-content: start; margin: auto; width: 50%;">
+		<img src={ tmdb.BuildPosterPath(peopleResponse.ProfilePath) } width="180" height="270" style="grid-column-start: 1; padding-right: 10px;">
+		<div style="grid-column-start: 2;">
+			<div style="display: grid; align-items: start; justify-content: start;">
+				if peopleResponse.Birthday != "" {
+					<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Birthday:</span>
+					<span style="grid-column-start: 2;">{ peopleResponse.Birthday }</span>
+				}
+				if peopleResponse.Deathday != "" {
+					<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Deathday:</span>
+					<span style="grid-column-start: 2;">{ peopleResponse.Deathday }</span>
+				}
+				if peopleResponse.PlaceOfBirth != "" {
+					<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Place of birth:</span>
+					<span style="grid-column-start: 2;">{ peopleResponse.PlaceOfBirth }</span>
+				}
+				if peopleResponse.KnownForDepartment != "" {
+					<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Known for:</span>
+					<span style="grid-column-start: 2;">{ peopleResponse.KnownForDepartment }</span>
+				}
+				if peopleResponse.Homepage != "" {
+					<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Homepage:</span>
+					<a style="grid-column-start: 2;" href={ peopleResponse.Homepage } target="_blank">{ peopleResponse.Homepage }</a>
+				}
+			</div>
+			if peopleResponse.Biography != "" {
+				<details>
+					<summary>Biography</summary>
+					<p>{ peopleResponse.Biography }</p>
+				</details>
+			}
+		</div>
+	</div>
+}
+
 templ CastCredits(castCredits []tmdb.CastCredit) {
+	<style>
+		.castCredit:hover {
+			background-color: #e6f3ff;
+		}
+	</style>
+
 	<h1 style="text-align: center;">Cast Credits({ len(castCredits) })</h1>
 	<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
 		for _, credit := range castCredits {
-			<a href={ fmt.Sprintf("/movie/%d", credit.Id) } class="credit" style="display: grid; justify-items: center; text-decoration: none; color: inherit; align-content: start;">
+			<a href={ fmt.Sprintf("/movie/%d", credit.Id) } class="castCredit" style="display: grid; justify-items: center; text-decoration: none; color: inherit; align-content: start;">
 				<img src={ tmdb.BuildPosterPath(credit.PosterPath) } width="120" height="180" style="padding-right: 10px;">
 				<span style="text-align: center;">{ credit.OriginalTitle }</span>
 				<span style="text-align: center; color: grey;">{ credit.Character }</span>
@@ -84,10 +88,16 @@ templ CastCredits(castCredits []tmdb.CastCredit) {
 }
 
 templ CrewCredits(crewCredits []CrewCredit) {
+	<style>
+		.crewCredit:hover {
+			background-color: #e6f3ff;
+		}
+	</style>
+
 	<h1 style="text-align: center;">Crew Credits({ len(crewCredits) })</h1>
 	<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
 		for _, credit := range crewCredits {
-			<a href={ fmt.Sprintf("/movie/%d", credit.Id) } class="credit" style="display: grid; justify-items: center; text-decoration: none; color: inherit; align-content: start;">
+			<a href={ fmt.Sprintf("/movie/%d", credit.Id) } class="crewCredit" style="display: grid; justify-items: center; text-decoration: none; color: inherit; align-content: start;">
 				<img src={ tmdb.BuildPosterPath(credit.PosterPath) } width="120" height="180" style="padding-right: 10px;">
 				<span style="text-align: center;">{ credit.OriginalTitle }</span>
 				<span style="color: grey; text-align: center;">

@@ -51,168 +51,7 @@ func Person(peopleResponse tmdb.PeopleResponse, castCredits []tmdb.CastCredit, c
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<h1 style=\"margin-top: 0px; text-align: center;\">")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var2 string
-		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(peopleResponse.Name)
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 20, Col: 72}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</h1><div style=\"display: grid; align-items: start; justify-content: start; margin: auto; width: 50%;\"><img src=\"")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var3 string
-		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(tmdb.BuildPosterPath(peopleResponse.ProfilePath))
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 22, Col: 62}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\" width=\"180\" height=\"270\" style=\"grid-column-start: 1; padding-right: 10px;\"><div style=\"grid-column-start: 2;\"><div style=\"display: grid; align-items: start; justify-content: start;\">")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		if peopleResponse.Birthday != "" {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<span style=\"grid-column-start: 1; padding-right: 5px; font-weight: bold;\">Birthday:</span> <span style=\"grid-column-start: 2;\">")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			var templ_7745c5c3_Var4 string
-			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(peopleResponse.Birthday)
-			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 27, Col: 67}
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</span> ")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-		}
-		if peopleResponse.Deathday != "" {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<span style=\"grid-column-start: 1; padding-right: 5px; font-weight: bold;\">Deathday:</span> <span style=\"grid-column-start: 2;\">")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			var templ_7745c5c3_Var5 string
-			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(peopleResponse.Deathday)
-			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 31, Col: 67}
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</span> ")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-		}
-		if peopleResponse.PlaceOfBirth != "" {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<span style=\"grid-column-start: 1; padding-right: 5px; font-weight: bold;\">Place of birth:</span> <span style=\"grid-column-start: 2;\">")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			var templ_7745c5c3_Var6 string
-			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(peopleResponse.PlaceOfBirth)
-			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 35, Col: 71}
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "</span> ")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-		}
-		if peopleResponse.KnownForDepartment != "" {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<span style=\"grid-column-start: 1; padding-right: 5px; font-weight: bold;\">Known for:</span> <span style=\"grid-column-start: 2;\">")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			var templ_7745c5c3_Var7 string
-			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(peopleResponse.KnownForDepartment)
-			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 39, Col: 77}
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "</span> ")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-		}
-		if peopleResponse.Homepage != "" {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "<span style=\"grid-column-start: 1; padding-right: 5px; font-weight: bold;\">Homepage:</span> <a style=\"grid-column-start: 2;\" href=\"")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			var templ_7745c5c3_Var8 templ.SafeURL
-			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinURLErrs(peopleResponse.Homepage)
-			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 43, Col: 69}
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "\" target=\"_blank\">")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			var templ_7745c5c3_Var9 string
-			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(peopleResponse.Homepage)
-			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 43, Col: 113}
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "</a>")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "</div>")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		if peopleResponse.Biography != "" {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 17, "<details><summary>Biography</summary><p>")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			var templ_7745c5c3_Var10 string
-			templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(peopleResponse.Biography)
-			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 49, Col: 35}
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 18, "</p></details>")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 19, "</div></div><style>\n\t\t\t.credit:hover {\n\t\t\t\tbackground-color: #e6f3ff;\n\t\t\t}\n\t\t</style>")
+		templ_7745c5c3_Err = PersonDetails(peopleResponse).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -221,7 +60,7 @@ func Person(peopleResponse tmdb.PeopleResponse, castCredits []tmdb.CastCredit, c
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 20, " <hr>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " <hr>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -234,7 +73,7 @@ func Person(peopleResponse tmdb.PeopleResponse, castCredits []tmdb.CastCredit, c
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 21, " <hr>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, " <hr>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -243,7 +82,197 @@ func Person(peopleResponse tmdb.PeopleResponse, castCredits []tmdb.CastCredit, c
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 22, "</html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</html>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		return nil
+	})
+}
+
+func PersonDetails(peopleResponse tmdb.PeopleResponse) templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var2 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var2 == nil {
+			templ_7745c5c3_Var2 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<h1 style=\"margin-top: 0px; text-align: center;\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var3 string
+		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(peopleResponse.Name)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 34, Col: 71}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</h1><div style=\"display: grid; align-items: start; justify-content: start; margin: auto; width: 50%;\"><img src=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var4 string
+		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(tmdb.BuildPosterPath(peopleResponse.ProfilePath))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 36, Col: 61}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "\" width=\"180\" height=\"270\" style=\"grid-column-start: 1; padding-right: 10px;\"><div style=\"grid-column-start: 2;\"><div style=\"display: grid; align-items: start; justify-content: start;\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		if peopleResponse.Birthday != "" {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<span style=\"grid-column-start: 1; padding-right: 5px; font-weight: bold;\">Birthday:</span> <span style=\"grid-column-start: 2;\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var5 string
+			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(peopleResponse.Birthday)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 41, Col: 66}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</span> ")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		if peopleResponse.Deathday != "" {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<span style=\"grid-column-start: 1; padding-right: 5px; font-weight: bold;\">Deathday:</span> <span style=\"grid-column-start: 2;\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var6 string
+			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(peopleResponse.Deathday)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 45, Col: 66}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "</span> ")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		if peopleResponse.PlaceOfBirth != "" {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "<span style=\"grid-column-start: 1; padding-right: 5px; font-weight: bold;\">Place of birth:</span> <span style=\"grid-column-start: 2;\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var7 string
+			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(peopleResponse.PlaceOfBirth)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 49, Col: 70}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "</span> ")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		if peopleResponse.KnownForDepartment != "" {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "<span style=\"grid-column-start: 1; padding-right: 5px; font-weight: bold;\">Known for:</span> <span style=\"grid-column-start: 2;\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var8 string
+			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(peopleResponse.KnownForDepartment)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 53, Col: 76}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "</span> ")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		if peopleResponse.Homepage != "" {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "<span style=\"grid-column-start: 1; padding-right: 5px; font-weight: bold;\">Homepage:</span> <a style=\"grid-column-start: 2;\" href=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var9 templ.SafeURL
+			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinURLErrs(peopleResponse.Homepage)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 57, Col: 68}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 17, "\" target=\"_blank\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var10 string
+			templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(peopleResponse.Homepage)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 57, Col: 112}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 18, "</a>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 19, "</div>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		if peopleResponse.Biography != "" {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 20, "<details><summary>Biography</summary><p>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var11 string
+			templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(peopleResponse.Biography)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 63, Col: 34}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 21, "</p></details>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 22, "</div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -267,21 +296,21 @@ func CastCredits(castCredits []tmdb.CastCredit) templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var11 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var11 == nil {
-			templ_7745c5c3_Var11 = templ.NopComponent
+		templ_7745c5c3_Var12 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var12 == nil {
+			templ_7745c5c3_Var12 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 23, "<h1 style=\"text-align: center;\">Cast Credits(")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 23, "<style>\n\t\t.castCredit:hover {\n\t\t\tbackground-color: #e6f3ff;\n\t\t}\n\t</style><h1 style=\"text-align: center;\">Cast Credits(")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var12 string
-		templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(len(castCredits))
+		var templ_7745c5c3_Var13 string
+		templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(len(castCredits))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 73, Col: 64}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 77, Col: 64}
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -294,25 +323,25 @@ func CastCredits(castCredits []tmdb.CastCredit) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var13 templ.SafeURL
-			templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinURLErrs(fmt.Sprintf("/movie/%d", credit.Id))
+			var templ_7745c5c3_Var14 templ.SafeURL
+			templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinURLErrs(fmt.Sprintf("/movie/%d", credit.Id))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 76, Col: 48}
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 26, "\" class=\"credit\" style=\"display: grid; justify-items: center; text-decoration: none; color: inherit; align-content: start;\"><img src=\"")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			var templ_7745c5c3_Var14 string
-			templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs(tmdb.BuildPosterPath(credit.PosterPath))
-			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 77, Col: 54}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 80, Col: 48}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var14))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 26, "\" class=\"castCredit\" style=\"display: grid; justify-items: center; text-decoration: none; color: inherit; align-content: start;\"><img src=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var15 string
+			templ_7745c5c3_Var15, templ_7745c5c3_Err = templ.JoinStringErrs(tmdb.BuildPosterPath(credit.PosterPath))
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 81, Col: 54}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var15))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -320,12 +349,12 @@ func CastCredits(castCredits []tmdb.CastCredit) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var15 string
-			templ_7745c5c3_Var15, templ_7745c5c3_Err = templ.JoinStringErrs(credit.OriginalTitle)
+			var templ_7745c5c3_Var16 string
+			templ_7745c5c3_Var16, templ_7745c5c3_Err = templ.JoinStringErrs(credit.OriginalTitle)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 78, Col: 60}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 82, Col: 60}
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var15))
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var16))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -333,12 +362,12 @@ func CastCredits(castCredits []tmdb.CastCredit) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var16 string
-			templ_7745c5c3_Var16, templ_7745c5c3_Err = templ.JoinStringErrs(credit.Character)
+			var templ_7745c5c3_Var17 string
+			templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs(credit.Character)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 79, Col: 69}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 83, Col: 69}
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var16))
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var17))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -346,12 +375,12 @@ func CastCredits(castCredits []tmdb.CastCredit) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var17 string
-			templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs(tmdb.GetReleaseYear(credit.ReleaseDate))
+			var templ_7745c5c3_Var18 string
+			templ_7745c5c3_Var18, templ_7745c5c3_Err = templ.JoinStringErrs(tmdb.GetReleaseYear(credit.ReleaseDate))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 80, Col: 71}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 84, Col: 71}
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var17))
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var18))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -384,21 +413,21 @@ func CrewCredits(crewCredits []CrewCredit) templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var18 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var18 == nil {
-			templ_7745c5c3_Var18 = templ.NopComponent
+		templ_7745c5c3_Var19 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var19 == nil {
+			templ_7745c5c3_Var19 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 32, "<h1 style=\"text-align: center;\">Crew Credits(")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 32, "<style>\n\t\t.crewCredit:hover {\n\t\t\tbackground-color: #e6f3ff;\n\t\t}\n\t</style><h1 style=\"text-align: center;\">Crew Credits(")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var19 string
-		templ_7745c5c3_Var19, templ_7745c5c3_Err = templ.JoinStringErrs(len(crewCredits))
+		var templ_7745c5c3_Var20 string
+		templ_7745c5c3_Var20, templ_7745c5c3_Err = templ.JoinStringErrs(len(crewCredits))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 87, Col: 64}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 97, Col: 64}
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var19))
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var20))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -411,25 +440,25 @@ func CrewCredits(crewCredits []CrewCredit) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var20 templ.SafeURL
-			templ_7745c5c3_Var20, templ_7745c5c3_Err = templ.JoinURLErrs(fmt.Sprintf("/movie/%d", credit.Id))
+			var templ_7745c5c3_Var21 templ.SafeURL
+			templ_7745c5c3_Var21, templ_7745c5c3_Err = templ.JoinURLErrs(fmt.Sprintf("/movie/%d", credit.Id))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 90, Col: 48}
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var20))
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 35, "\" class=\"credit\" style=\"display: grid; justify-items: center; text-decoration: none; color: inherit; align-content: start;\"><img src=\"")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			var templ_7745c5c3_Var21 string
-			templ_7745c5c3_Var21, templ_7745c5c3_Err = templ.JoinStringErrs(tmdb.BuildPosterPath(credit.PosterPath))
-			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 91, Col: 54}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 100, Col: 48}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var21))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 35, "\" class=\"crewCredit\" style=\"display: grid; justify-items: center; text-decoration: none; color: inherit; align-content: start;\"><img src=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var22 string
+			templ_7745c5c3_Var22, templ_7745c5c3_Err = templ.JoinStringErrs(tmdb.BuildPosterPath(credit.PosterPath))
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 101, Col: 54}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var22))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -437,12 +466,12 @@ func CrewCredits(crewCredits []CrewCredit) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var22 string
-			templ_7745c5c3_Var22, templ_7745c5c3_Err = templ.JoinStringErrs(credit.OriginalTitle)
+			var templ_7745c5c3_Var23 string
+			templ_7745c5c3_Var23, templ_7745c5c3_Err = templ.JoinStringErrs(credit.OriginalTitle)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 92, Col: 60}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 102, Col: 60}
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var22))
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var23))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -452,12 +481,12 @@ func CrewCredits(crewCredits []CrewCredit) templ.Component {
 			}
 			for i, job := range credit.Jobs {
 				if i != len(credit.Jobs)-1 {
-					var templ_7745c5c3_Var23 string
-					templ_7745c5c3_Var23, templ_7745c5c3_Err = templ.JoinStringErrs(job)
+					var templ_7745c5c3_Var24 string
+					templ_7745c5c3_Var24, templ_7745c5c3_Err = templ.JoinStringErrs(job)
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 96, Col: 12}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 106, Col: 12}
 					}
-					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var23))
+					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var24))
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
@@ -466,12 +495,12 @@ func CrewCredits(crewCredits []CrewCredit) templ.Component {
 						return templ_7745c5c3_Err
 					}
 				} else {
-					var templ_7745c5c3_Var24 string
-					templ_7745c5c3_Var24, templ_7745c5c3_Err = templ.JoinStringErrs(job)
+					var templ_7745c5c3_Var25 string
+					templ_7745c5c3_Var25, templ_7745c5c3_Err = templ.JoinStringErrs(job)
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 98, Col: 12}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 108, Col: 12}
 					}
-					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var24))
+					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var25))
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
@@ -481,12 +510,12 @@ func CrewCredits(crewCredits []CrewCredit) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var25 string
-			templ_7745c5c3_Var25, templ_7745c5c3_Err = templ.JoinStringErrs(tmdb.GetReleaseYear(credit.ReleaseDate))
+			var templ_7745c5c3_Var26 string
+			templ_7745c5c3_Var26, templ_7745c5c3_Err = templ.JoinStringErrs(tmdb.GetReleaseYear(credit.ReleaseDate))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 102, Col: 92}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/person.templ`, Line: 112, Col: 92}
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var25))
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var26))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
