@@ -142,6 +142,12 @@ func movie(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	alternativeTitles, err := tmdb.AlternativeTitles(r.Context(), config.Token, idString)
+	if err != nil {
+		w.WriteHeader(500)
+		return
+	}
+
 	credits, err := tmdb.Credits(r.Context(), config.Token, idString)
 	if err != nil {
 		w.WriteHeader(500)
@@ -174,7 +180,7 @@ func movie(w http.ResponseWriter, r *http.Request) {
 		return cmp.Compare(b.Popularity, a.Popularity)
 	})
 
-	components.Movie(*movieDetails, credits.Cast, crew).Render(r.Context(), w)
+	components.Movie(*movieDetails, credits.Cast, crew, alternativeTitles.Titles).Render(r.Context(), w)
 }
 
 func person(w http.ResponseWriter, r *http.Request) {

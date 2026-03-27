@@ -109,6 +109,16 @@ type CrewCredit struct {
 	Job           string  `json:"job"`
 }
 
+type MovieAlternativeTitlesResponse struct {
+	Id     int64              `json:"id"`
+	Titles []AlternativeTitle `json:"titles"`
+}
+
+type AlternativeTitle struct {
+	Iso31661 string `json:"iso_3166_1"`
+	Title    string `json:"title"`
+}
+
 func SearchMovies(ctx context.Context, token string, search string) (*MovieSearchResponse, error) {
 	client := http.Client{}
 
@@ -204,6 +214,34 @@ func MovieDetails(ctx context.Context, token string, movieId string) (*MovieDeta
 	}
 
 	var response MovieDetailsResponse
+	json.Unmarshal(body, &response)
+
+	return &response, nil
+}
+
+func AlternativeTitles(ctx context.Context, token string, movieId string) (*MovieAlternativeTitlesResponse, error) {
+	client := http.Client{}
+
+	req, err := http.NewRequestWithContext(ctx, "GET", fmt.Sprintf("https://api.themoviedb.org/3/movie/%s/alternative_titles", movieId), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Authorization", "Bearer "+token)
+
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var response MovieAlternativeTitlesResponse
 	json.Unmarshal(body, &response)
 
 	return &response, nil

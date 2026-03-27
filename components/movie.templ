@@ -18,21 +18,21 @@ type MovieCrewMember struct {
 }
 
 
-templ Movie(movieDetails tmdb.MovieDetailsResponse, cast []tmdb.MovieCastMember, crew []MovieCrewMember) {
+templ Movie(movieDetails tmdb.MovieDetailsResponse, cast []tmdb.MovieCastMember, crew []MovieCrewMember, titles []tmdb.AlternativeTitle) {
 	<html>
 		<head>
 			<title>{ movieDetails.OriginalTitle } ({ tmdb.GetReleaseYear(movieDetails.ReleaseDate) })</title>
 			<link rel="icon" type="image/x-icon" href="/static/favicon.ico">
 		</head>
 		@Home()
-		@MovieDetails(movieDetails)
+		@MovieDetails(movieDetails, titles)
 		@MovieCast(cast)
 		<hr>
 		@MovieCrew(crew)
 	</html>
 }
 
-templ MovieDetails(movieDetails tmdb.MovieDetailsResponse) {
+templ MovieDetails(movieDetails tmdb.MovieDetailsResponse, titles []tmdb.AlternativeTitle) {
 	<h1 style="margin-top: 0px; text-align: center;">{ movieDetails.OriginalTitle }</h1>
 	<div style="display: grid; align-items: start; justify-content: start; margin: auto; width: 50%;">
 		<img src={ tmdb.BuildPosterPath(movieDetails.PosterPath) } width="180" height="270" style="grid-column-start: 1; padding-right: 10px;">
@@ -59,6 +59,17 @@ templ MovieDetails(movieDetails tmdb.MovieDetailsResponse) {
 				<span style="grid-column-start: 1; padding-right: 5px; font-weight: bold;">Revenue:</span>
 				<span style="grid-column-start: 2;">${ movieDetails.Revenue }</span>
 			</div>
+			<details>
+				<summary>Alternative titles</summary>
+				<div style="display: flex; flex-direction: column;">
+					for _, title := range titles {
+						<div>
+							<span>{title.Iso31661}</span>
+							<span>{title.Title}</span>
+						</div>
+					}
+				</div>
+			</details>
 			<p>{ movieDetails.Overview }</p>
 		</div>
 	</div>
