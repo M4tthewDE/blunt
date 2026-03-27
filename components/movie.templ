@@ -21,7 +21,7 @@ type MovieCrewMember struct {
 templ Movie(movieDetails tmdb.MovieDetailsResponse, cast []tmdb.MovieCastMember, crew []MovieCrewMember) {
 	<html>
 		<head>
-			<title>{ movieDetails.OriginalTitle }</title>
+			<title>{ movieDetails.OriginalTitle } ({ tmdb.GetReleaseYear(movieDetails.ReleaseDate) })</title>
 			<link rel="icon" type="image/x-icon" href="/static/favicon.ico">
 		</head>
 		@Home()
