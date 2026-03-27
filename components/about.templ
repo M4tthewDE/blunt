@@ -2,9 +2,6 @@ package components
 
 import _ "embed"
 
-//go:embed static/tmdb_primary_long_blue.svg
-var tmdbLogo string
-
 templ About(commitHash string, buildTime string) {
     <html>
         <head>
@@ -13,7 +10,7 @@ templ About(commitHash string, buildTime string) {
         </head>
         <div>
             <div style="width: 20em; height: 1em; margin-bottom: 1em;">
-                @templ.Raw(tmdbLogo)
+                <img src="static/tmdb_primary_long_blue.svg"/>
             </div>
             This product uses the TMDB API but is not endorsed or certified by TMDB.
             <hr>
