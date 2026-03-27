@@ -20,6 +20,7 @@ templ Person(peopleResponse tmdb.PeopleResponse, castCredits []tmdb.CastCredit, 
 	<html>
 		<head>
 			<title>{ peopleResponse.Name }</title>
+			<link rel="icon" type="image/x-icon" href="/static/favicon.ico">
 		</head>
 		@Home()
 		@PersonDetails(peopleResponse)

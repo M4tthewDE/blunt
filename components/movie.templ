@@ -22,6 +22,7 @@ templ Movie(movieDetails tmdb.MovieDetailsResponse, cast []tmdb.MovieCastMember,
 	<html>
 		<head>
 			<title>{ movieDetails.OriginalTitle }</title>
+			<link rel="icon" type="image/x-icon" href="/static/favicon.ico">
 		</head>
 		@Home()
 		@MovieDetails(movieDetails)

@@ -2,7 +2,9 @@ package main
 
 import (
 	"cmp"
+	"embed"
 	"fmt"
+	"io/fs"
 	"log"
 	"net/http"
 	"os"
@@ -23,6 +25,9 @@ type Config struct {
 
 var config Config
 
+//go:embed components/static/*
+var static embed.FS
+
 func main() {
 	configPath := os.Args[1]
 	data, err := os.ReadFile(configPath)
@@ -41,6 +46,13 @@ func main() {
 	http.HandleFunc("GET /movie/{id}", movie)
 	http.HandleFunc("GET /person/{id}", person)
 	http.HandleFunc("GET /person/{id}/filteredCastCredits", filteredCastCredits)
+
+	staticFiles, err := fs.Sub(static, "components/static")
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.FS(staticFiles))))
 
 	log.Println("Starting server on port 8080")
 	http.ListenAndServe(":8080", nil)

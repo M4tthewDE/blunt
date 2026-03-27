@@ -29,7 +29,7 @@ func Index() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script src=\"https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js\"></script><html><head><title>Movie Explorer</title></head><div style=\"float: right;\"><a href=\"/about\">About</a></div><div style=\"margin: auto; width: 50%; justify-items: center; padding-bottom: 1rem;\"><h1 style=\"text-align: center;\">Movie Explorer</h1><input type=\"search\" autocomplete=\"off\" name=\"search\" autofocus placeholder=\"Search Movies/People...\" hx-post=\"/search\" hx-trigger=\"input changed delay:250ms\" hx-target=\"#search-results\" style=\"margin: auto; display: block;\"></div><div id=\"search-results\"></div></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script src=\"https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js\"></script><html><head><title>Movie Explorer</title><link rel=\"icon\" type=\"image/x-icon\" href=\"/static/favicon.ico\"></head><div style=\"float: right;\"><a href=\"/about\">About</a></div><div style=\"margin: auto; width: 50%; justify-items: center; padding-bottom: 1rem;\"><h1 style=\"text-align: center;\">Movie Explorer</h1><input type=\"search\" autocomplete=\"off\" name=\"search\" autofocus placeholder=\"Search Movies/People...\" hx-post=\"/search\" hx-trigger=\"input changed delay:250ms\" hx-target=\"#search-results\" style=\"margin: auto; display: block;\"></div><div id=\"search-results\"></div></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
