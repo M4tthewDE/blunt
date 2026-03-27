@@ -20,6 +20,9 @@ type MovieCrewMember struct {
 
 templ Movie(movieDetails tmdb.MovieDetailsResponse, cast []tmdb.MovieCastMember, crew []MovieCrewMember) {
 	<html>
+		<head>
+			<title>{ movieDetails.OriginalTitle }</title>
+		</head>
 		@Home()
 		@MovieDetails(movieDetails)
 		@MovieCast(cast)
