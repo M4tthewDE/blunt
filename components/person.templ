@@ -25,13 +25,21 @@ templ Person(peopleResponse tmdb.PeopleResponse, castCredits []tmdb.CastCredit, 
 		@Home()
 		@PersonDetails(peopleResponse)
 		if peopleResponse.KnownForDepartment == "Acting" {
-			@CastCredits(castCredits, castCreditsFilterParameters, strconv.FormatInt(peopleResponse.Id, 10))
-			<hr>
-			@CrewCredits(crewCredits)
+			if len(castCredits) != 0 {
+				@CastCredits(castCredits, castCreditsFilterParameters, strconv.FormatInt(peopleResponse.Id, 10))
+			}
+			if len(crewCredits) != 0 {
+				<hr>
+				@CrewCredits(crewCredits)
+			}
 		} else {
-			@CrewCredits(crewCredits)
-			<hr>
-			@CastCredits(castCredits, castCreditsFilterParameters, strconv.FormatInt(peopleResponse.Id, 10))
+			if len(crewCredits) != 0 {
+				@CrewCredits(crewCredits)
+				<hr>
+			}
+			if len(castCredits) != 0 {
+				@CastCredits(castCredits, castCreditsFilterParameters, strconv.FormatInt(peopleResponse.Id, 10))
+			}
 		}
 	</html>
 }
